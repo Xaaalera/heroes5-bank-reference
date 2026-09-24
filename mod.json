@@ -1,0 +1,204 @@
+{
+  "id": "army-reference",
+  "source_archive": "Universe_mod.pak",
+  "source_path": "UI/UIGameRoot.(UIGameRoot).xdb",
+  "reference_windows": {
+    "count_style_source": "Text/Game/HeroStrings/NeutralCounts/Pack.txt",
+    "labels": {
+      "tier": "<tooltip_header><left><font size=12>T{tier}",
+      "count": "<creatures_count_small><center><font face=System size={size}><outline>{range_color}{amount}",
+      "chance": "<creatures_count_small><center><font face=System size=7><outline><color=#D8A0FF>{chance}%",
+      "chance_note": "<left><font size=9>% на отряд; число общее для пары.",
+      "variant_note": "<left><font size=9>A / B — варианты армии."
+    }
+  },
+  "object_reference": {
+    "stats_sha256": "2fc272e31bd0f8ad32873e8106e2a4006da7c6ce426b455386ada92ba66f023a",
+    "archives": [
+      "data.pak",
+      "texts.pak",
+      "a2p1-data.pak",
+      "a2p1-texts.pak",
+      "Universe_mod.pak",
+      "universe_mod_texts_ru.pak"
+    ],
+    "labels": {
+      "resource": "<left><font size=14>Обычно: {low}–{high} (без бонусов)",
+      "army": "<left><font size=14><color=#DAA520>Армия · возможные тиры",
+      "tier": "<color=#DAA520>T{tier}{variant}<color=#FFE4E1>",
+      "group": "{names}: {total_low}–{total_high} ({count} × {low}–{high})",
+      "alternative": "{name} {low}–{high}",
+      "different_group": "{count} × ({alternatives})",
+      "bank_note": "<color=#DAA520>Тир неизвестен · / = замена",
+      "reward_marker": "Награда",
+      "stack_pattern": "отряд"
+    },
+    "resources": {
+      "TREASURE_WOOD": {
+        "scale": 1
+      },
+      "TREASURE_ORE": {
+        "scale": 1
+      },
+      "TREASURE_MERCURY": {
+        "scale": 1
+      },
+      "TREASURE_CRYSTAL": {
+        "scale": 1
+      },
+      "TREASURE_SULFUR": {
+        "scale": 1
+      },
+      "TREASURE_GEMS": {
+        "scale": 1
+      },
+      "TREASURE_GOLD": {
+        "scale": 100
+      }
+    },
+    "banks": {
+      "BUILDING_CRYPT": {
+        "stats": "BankCrypt",
+        "tiers": [
+          1,
+          1,
+          2,
+          2,
+          3,
+          3,
+          4,
+          4
+        ],
+        "info": "01"
+      },
+      "BUILDING_PYRAMID": {
+        "stats": "BankPyramid",
+        "tiers": [
+          1,
+          2,
+          3
+        ],
+        "info": "04"
+      },
+      "BUILDING_NAGA_BANK": {
+        "stats": "BankMagiVault",
+        "tiers": [
+          1,
+          2,
+          2,
+          3,
+          3
+        ],
+        "info": "09"
+      },
+      "BUILDING_DRAGON_UTOPIA": {
+        "stats": "BankDragonUtopia",
+        "tiers": [
+          1,
+          2,
+          2,
+          3,
+          3,
+          4,
+          5
+        ],
+        "info": "13"
+      },
+      "BUILDING_CYCLOPS_STOCKPILE": {
+        "stats": "BankElementalsStockpile",
+        "tiers": [
+          1,
+          2,
+          3,
+          4
+        ],
+        "info": "08"
+      },
+      "BUILDING_DEMOLISH": {
+        "stats": "BankDemolish",
+        "tiers": [
+          1,
+          2,
+          3,
+          4
+        ],
+        "info": "11"
+      },
+      "BUILDING_UNKEMPT": {
+        "stats": "BankUnkempt",
+        "tiers": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "info": "07"
+      },
+      "BUILDING_DWARVEN_TREASURE": {
+        "stats": "BankDwarvenTreasure",
+        "tiers": [
+          1,
+          2,
+          2,
+          3,
+          4
+        ],
+        "info": "02"
+      },
+      "BUILDING_BLOOD_TEMPLE": {
+        "stats": "BankBloodTemple",
+        "tiers": [
+          1,
+          2,
+          2,
+          3,
+          3,
+          4
+        ],
+        "info": "06"
+      },
+      "BUILDING_TREANT_THICKET": {
+        "stats": "BankTreantThicket",
+        "tiers": [
+          1,
+          2,
+          3
+        ],
+        "info": "10"
+      },
+      "BUILDING_GARGOYLE_STONEVAULT": {
+        "stats": "BankGargoyleStonevault",
+        "tiers": [
+          1,
+          2,
+          3,
+          4
+        ],
+        "info": "03"
+      },
+      "BUILDING_SUNKEN_TEMPLE": {
+        "stats": "BankSunkenTemple",
+        "tiers": [
+          1,
+          2,
+          3,
+          4
+        ],
+        "info": "05"
+      },
+      "BUILDING_ORC_DEPOSIT": {
+        "stats": "BankNagaTemple",
+        "tiers": [
+          1,
+          2,
+          3
+        ],
+        "descriptions": [
+          "Text/Universe_mod/Buildings/OrcDeposit/Desc.txt"
+        ],
+        "info": "12"
+      }
+    }
+  }
+}
