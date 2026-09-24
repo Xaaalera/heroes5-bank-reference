@@ -1,0 +1,103 @@
+{
+  "diffHash": "7229937a3ed16f8e8b198269e079fa002bd832a21c0335d71ab1393941fbb5cb",
+  "commitSha": "ee721bb1e56457cf4c4baef2c0ba49e7fbc813d1",
+  "perAgent": {
+    "craft": {
+      "score": 10,
+      "verdict": "PASS"
+    },
+    "architecture": {
+      "score": 10,
+      "verdict": "PASS"
+    },
+    "tests": {
+      "score": 10,
+      "verdict": "PASS"
+    },
+    "security": {
+      "score": 10,
+      "verdict": "PASS"
+    },
+    "docs": {
+      "score": 10,
+      "verdict": "PASS",
+      "findings": [],
+      "claims": [
+        {
+          "path": "AGENTS.md",
+          "disposition": "judged"
+        },
+        {
+          "path": "CONTRIBUTING.md",
+          "disposition": "judged"
+        },
+        {
+          "path": "NOTICE.md",
+          "disposition": "judged"
+        },
+        {
+          "path": "README.md",
+          "disposition": "judged"
+        }
+      ],
+      "summary": {
+        "agent": "docs",
+        "verdict": "PASS",
+        "score": 10,
+        "counts": {
+          "blocker": 0,
+          "major": 0,
+          "minor": 0,
+          "advisory": 0
+        },
+        "one_line": "The bank recipe and diagnostic installation are documented with accurate ownership and live-validation limits."
+      },
+      "review": {
+        "reviewer": "/root/review_craft",
+        "files": [
+          "AGENTS.md",
+          "CONTRIBUTING.md",
+          "NOTICE.md",
+          "README.md"
+        ],
+        "criteria": {
+          "purpose": {
+            "verdict": "PASS",
+            "evidence": "Read all four changed Markdown files and the self-contained mod.json. README explains a reference for possible bank armies, portraits, ranges and tier alternatives, with source installation and removal. It explicitly denies reading the hidden selected guards or predicting victory. AGENTS/CONTRIBUTING define review and source-handling rules; NOTICE states provenance."
+          },
+          "structure": {
+            "verdict": "PASS",
+            "evidence": "README leads with scope and source composition, then a complete PowerShell clone/venv/workspace/build/deploy/native diagnostic sequence, removal and limits. The previously pending wiki installation link was replaced in final HEAD ee721bb by an in-page anchor to the actual installation section. EN text follows the same shared commands and limitations. mod.json embeds its own object_reference catalog instead of depending on another workspace mod."
+          },
+          "specificity": {
+            "verdict": "PASS",
+            "evidence": "The recipe id is army-reference, source_archive Universe_mod.pak and source_path UI/UIGameRoot.(UIGameRoot).xdb; reference_windows and object_reference are both present. README build uses `--mod army-reference --source .`, while deploy uses the already built H5U without --source, matching final devkit semantics. It names the owned rollback file, pinned devkit gitlink 1b8934ac084491da460ce8bb145819e41e2cf888, 19 public names/12 confirmed types/13 catalog families and the unresolved OrcDeposit binding."
+          },
+          "reproducibility": {
+            "verdict": "PASS",
+            "evidence": "Parent reports four offline recipe/native-selector tests passing, a separate-checkout --source build outside H5_WORKSPACE producing the same 1215708-byte H5U and SHA-256 824a14b48fbdadce9ea0475b49bc4d1f1f6d2ef112ef8294b63cc1ea4ebf7f1e as the old build, plus root partition checks. The test script imports Keystone/Unicorn before discovery and accepts no skips. I did not run a new game process; README says extracted standalone build was not live-launched."
+          },
+          "evidence": {
+            "verdict": "PASS",
+            "evidence": "Current mod.json contains its own bank tiers/labels/archives and output recipe; scripts/check.py requires dependencies and executes tests without a game. The README distinguishes the observed demon-bank T1-T4 ranges from unverified all-bank coverage and final text/scale refinements. Parent supplied the byte-identical package comparison; I inspected current source/documentation and did not scan a game installation or private predecessor. Published bank catalog remains linked for the underlying range explanation."
+          },
+          "applicability": {
+            "verdict": "PASS",
+            "evidence": "The installation is scoped to Windows, Python 3.10+ x64 and pinned Universe. It requires both an H5U and devkit `native-probe.py launch --army-layout --control`; README says H5U alone does not prove window selection and there is no standalone player DLL installer. It does not claim combined operation with the predictor, universal name routing, known hidden guards or complete profile isolation."
+          },
+          "translations": {
+            "verdict": "PASS",
+            "evidence": "RU and EN README sections agree on self-contained catalog, --source build, separate workspace, H5U plus diagnostic native launch, owned rollback, pinned devkit, 19/12/13 caveat, byte-identical build and no fresh live run. AGENTS/CONTRIBUTING/NOTICE carry matching source/validation boundaries. The final RU intro now links locally to installation rather than an undeployed wiki page; EN refers to the shared installation block."
+          },
+          "maintenance": {
+            "verdict": "PASS",
+            "evidence": "The devkit dependency is pinned by gitlink and explicit README revision; changing installation or behavior requires updating README/wiki and repeating exact-diff review. No game resources, compiled H5U or profiles are tracked. The self-contained recipe removes the prior cross-mod catalog requirement while leaving devkit's shared compiler canonical. review:info lists exactly these four Markdown paths; no source edits were made by this reviewer."
+          }
+        },
+        "findings": []
+      }
+    }
+  },
+  "overall": "PASS",
+  "timestamp": "2026-09-24T20:22:36.264Z"
+}
