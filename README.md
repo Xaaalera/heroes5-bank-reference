@@ -6,7 +6,7 @@
 
 ### Игроку: обычный запуск
 
-Поставка — DLL и H5U, без отдельного EXE. Версия 0.1.0-preview.2 экспериментальная; [Releases](https://github.com/Xaaalera/heroes5-bank-reference/releases) содержит выпуски. Старый EXE-кандидат отменён. Code → Download ZIP скачивает исходники.
+Поставка — DLL и H5U, без отдельного EXE. Версия 0.1.0-preview.2 экспериментальная; Наличие архива проверяй в [Releases](https://github.com/Xaaalera/heroes5-bank-reference/releases): пустой список означает, что пользовательский пакет ещё не опубликован. Старый EXE-кандидат отменён. Code → Download ZIP скачивает исходники.
 
 1. Закрой игру и редактор. Файлы пакета размещаются в установленной игре:
    - bin/dinput8.dll — общий файл для обоих наших модов;
@@ -63,7 +63,7 @@ Reference possible bank armies for the linked Universe build: portraits, tiers, 
 
 ### Player installation
 
-Use the DLL/H5U package, not a separate EXE or source ZIP. Version 0.1.0-preview.2 is experimental; the old EXE draft was withdrawn. Exit game/editor and place the shared bin/dinput8.dll, bin/Heroes5Mods/WorkshopBankReference.dll and UserMODs/workshop-army-reference.h5u under the installed game directory.
+Check Releases for a published DLL/H5U archive; if none is listed, no player package is available yet. Do not use a separate EXE or source ZIP. Version 0.1.0-preview.2 is experimental; the old EXE draft was withdrawn. Exit game/editor and place the shared bin/dinput8.dll, bin/Heroes5Mods/WorkshopBankReference.dll and UserMODs/workshop-army-reference.h5u under the installed game directory.
 
 Both mods share one bootstrap. Do not overwrite another mod's dinput8.dll without compatibility checks; original d3d9.dll, uni.dll and um.dll remain unchanged. Remove the old workshop-object-reference.h5u text prototype: it adds oversized descriptions, and the new DLL rejects that conflict.
 
