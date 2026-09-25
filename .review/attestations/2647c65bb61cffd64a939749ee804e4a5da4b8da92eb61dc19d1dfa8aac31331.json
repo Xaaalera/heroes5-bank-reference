@@ -1,0 +1,88 @@
+{
+  "diffHash": "2647c65bb61cffd64a939749ee804e4a5da4b8da92eb61dc19d1dfa8aac31331",
+  "commitSha": "ff14636dbec69ff4bde76b5d441c4b3316fcf186",
+  "perAgent": {
+    "craft": {
+      "verdict": "PASS",
+      "score": 10
+    },
+    "docs": {
+      "score": 10,
+      "verdict": "PASS",
+      "findings": [],
+      "claims": [
+        {
+          "path": "README.md",
+          "disposition": "judged"
+        }
+      ],
+      "summary": {
+        "agent": "docs",
+        "verdict": "PASS",
+        "score": 10,
+        "counts": {
+          "blocker": 0,
+          "major": 0,
+          "minor": 0,
+          "advisory": 0
+        },
+        "one_line": "The README's installer-boundary claims match the game-free temporary-directory tests."
+      },
+      "review": {
+        "reviewer": "/root/review_craft",
+        "files": [
+          "README.md"
+        ],
+        "criteria": {
+          "purpose": {
+            "verdict": "PASS",
+            "evidence": "Reviewed README.md, the only changed Markdown path, against the new game-free InstallPackage fixture. Its purpose is to explain what the existing six checks now verify at the player package's file-install boundary, without implying a fresh game launch."
+          },
+          "structure": {
+            "verdict": "PASS",
+            "evidence": "README adds the new file-install assertions to the established RU and EN verification paragraphs, leaving player install/removal and developer build steps intact. It keeps test evidence beside the build mechanism and separate from historical imp-cache gameplay observations."
+          },
+          "specificity": {
+            "verdict": "PASS",
+            "evidence": "Both languages say the fixture copies an H5U into a fresh temporary directory, repeats without replacing the matching file and rejects different existing content. tests/test_player_build.py invokes bank_selector_test with source/target paths, checks exact bytes, unchanged target mtime, foreign-file preservation and source preservation. bank_selector_test's two-argument branch calls the production InstallPackage routine without calling Run or starting a game."
+          },
+          "reproducibility": {
+            "verdict": "PASS",
+            "evidence": "Parent reports all six bank checks passing on the final revision. The Python integration creates a synthetic routing H5U, compiles Win32 CTest and runs the two-path file-installer fixture under TemporaryDirectory; no installed game or profile is read. README still says the new native launch path lacks live acceptance. I did not run a game or repeat the test suite myself."
+          },
+          "evidence": {
+            "verdict": "PASS",
+            "evidence": "The source diff supports the docs: test main accepts exactly two fixture paths and calls InstallPackage; the integration test verifies first copy, idempotent second call, refusal of changed target and unchanged source. Other selector and memory-protection checks remain. No production launcher function or H5U recipe changed in this bounded diff."
+          },
+          "applicability": {
+            "verdict": "PASS",
+            "evidence": "The claims are limited to filesystem ownership and synthetic native selector checks. They do not imply that the player EXE's file picker, real game process, bank window or combined mod installation has been live validated. Existing pinned Universe and no-stable-release limits remain in the README."
+          },
+          "translations": {
+            "verdict": "PASS",
+            "evidence": "RU and EN added sentences describe the same fresh-copy, repeat-without-overwrite and differing-file rejection checks, and both say no game is launched. The shared test count remains six. No material translation divergence found."
+          },
+          "maintenance": {
+            "verdict": "PASS",
+            "evidence": "The new test calls the production InstallPackage implementation through a disposable fixture rather than duplicating its copy/refusal logic. README is updated with the relevant behavior while source/installed-game boundaries remain clear. review:info lists only README.md for this exact diff; no source file was edited by this reviewer."
+          }
+        },
+        "findings": []
+      }
+    },
+    "security": {
+      "verdict": "PASS",
+      "score": 10
+    },
+    "tests": {
+      "verdict": "PASS",
+      "score": 10
+    },
+    "architecture": {
+      "verdict": "PASS",
+      "score": 10
+    }
+  },
+  "overall": "PASS",
+  "timestamp": "2026-09-25T08:45:26.195Z"
+}
