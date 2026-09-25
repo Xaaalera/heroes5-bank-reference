@@ -1,1 +1,2 @@
 -r devkit/requirements-dev.txt
+capstone==5.0.9
