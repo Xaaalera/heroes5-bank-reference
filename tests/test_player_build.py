@@ -36,6 +36,27 @@ class PlayerBuildTests(unittest.TestCase):
                 completed = subprocess.run(command, capture_output=True, text=True, errors='replace', timeout=120)
                 self.assertEqual(completed.returncode, 0, completed.stdout + completed.stderr)
 
+            # Exercise the production file installer, but only under this fresh
+            # temporary directory. Existing differing content must survive.
+            executable = root / 'build/Release/bank_selector_test.exe'
+            target = root / 'game/UserMODs/workshop-army-reference.h5u'
+            original = package.read_bytes()
+            command = [str(executable), str(package), str(target)]
+            first = subprocess.run(command, capture_output=True, text=True, timeout=15)
+            self.assertEqual(first.returncode, 0, first.stderr)
+            self.assertEqual(target.read_bytes(), original)
+            timestamp = target.stat().st_mtime_ns
+            second = subprocess.run(command, capture_output=True, text=True, timeout=15)
+            self.assertEqual(second.returncode, 0, second.stderr)
+            self.assertEqual(target.stat().st_mtime_ns, timestamp)
+
+            target.write_bytes(b'different existing mod')
+            refused = subprocess.run(command, capture_output=True, text=True, timeout=15)
+            self.assertNotEqual(refused.returncode, 0)
+            self.assertIn('Nothing was overwritten', refused.stderr)
+            self.assertEqual(target.read_bytes(), b'different existing mod')
+            self.assertEqual(package.read_bytes(), original)
+
     def test_invalid_public_routes_cannot_generate_a_launcher(self):
         for routes in ([], [{'title': '', 'family': 'x', 'window_id': 'X'}],
                        [{'title': 'x', 'family': 'x', 'window_id': 'X'}] * 2):

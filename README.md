@@ -55,7 +55,7 @@ Copy-Item "$env:H5_WORKSPACE/.local/test-state/army-reference.h5u" .local/player
 .venv/Scripts/python scripts/check.py
 ```
 
-Шесть проверок: прежний счётчик/селектор в x86-эмуляторе, рецепт и подписи, отказ от неверных маршрутов, сборка нативного установщика на синтетических данных. CTest проверяет отказ на неверных/уже заменённых байтах и защиты памяти в собственном тестовом процессе. Игру эти тесты не запускают. Для них нужны CMake и x86-компилятор; отсутствие инструмента — ошибка, не PASS.
+Шесть проверок: прежний счётчик/селектор в x86-эмуляторе, рецепт и подписи, отказ от неверных маршрутов, сборка нативного установщика на синтетических данных. CTest проверяет отказ на неверных/уже заменённых байтах и защиты памяти в собственном тестовом процессе. Дополнительно проверяются копирование H5U в пустую временную папку, повторная установка без перезаписи и отказ при отличающемся существующем файле. Игру эти тесты не запускают. Для них нужны CMake и x86-компилятор; отсутствие инструмента — ошибка, не PASS.
 
 Генератор на этапе сборки берёт `layout_trampoline` и `layout_data` закреплённого devkit, определяет relocations через Capstone и сравнивает результат на трёх адресах с исходным генератором. EXE использует готовые байты: запускает собственный процесс suspended, проверяет исходные шесть байт `0x5f8800`, устанавливает тот же селектор, восстанавливает защиту и продолжает запуск. Неудачная установка завершает только собственный новый процесс. При ошибке запуска уже установленный H5U может остаться; его удаление описано выше.
 
@@ -79,7 +79,7 @@ The pinned devkit revision and shared PowerShell commands above are canonical. R
 
 Distribute only the built EXE, matching H5U and player instructions. Recipe edits require rebuilding the H5U, generated header and EXE because the package hash is compiled into the launcher. Game resources are not committed to Git.
 
-Six checks cover the existing x86 counter/selector, recipe/labels, invalid routes, and a native build using synthetic routing data. CTest checks wrong/already-hooked entry rejection and memory protections inside its own disposable process. No game runs; absent CMake/compiler is a failure, not a pass.
+Six checks cover the existing x86 counter/selector, recipe/labels, invalid routes, and a native build using synthetic routing data. CTest checks wrong/already-hooked entry rejection and memory protections inside its own disposable process. The same fixture also checks H5U copying into a fresh temporary directory, unchanged repeated installation and rejection of differing existing content. No game runs; absent CMake/compiler is a failure, not a pass.
 
 The build generator consumes pinned devkit layout code/data, derives relocations through Capstone and compares rebasing at three addresses against the original generator. The native EXE uses those bytes without Python: creates its own suspended game, checks six original bytes at `0x5f8800`, installs the selector, restores protection and resumes. Setup failure terminates only that new child. If launch fails after resource installation, the owned H5U may remain; remove it as described above.
 

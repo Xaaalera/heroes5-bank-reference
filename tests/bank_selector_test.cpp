@@ -3,8 +3,14 @@
 #include "../src/bank_launcher.cpp"
 #undef wmain
 
-int main() {
+int wmain(int count, wchar_t* arguments[]) {
     try {
+        // Optional fixture-only resource installation. Never calls Run or starts a game.
+        if (count == 3) {
+            InstallPackage(arguments[1], arguments[2]);
+            return 0;
+        }
+        Require(count == 1, "Expected either no arguments or fixture source/target paths.");
         void* page = VirtualAlloc(nullptr, 0x10000,
                                  MEM_RESERVE | MEM_COMMIT, PAGE_READWRITE);
         Require(page != nullptr, "Cannot reserve fake game memory.");
