@@ -27,10 +27,10 @@ void Rebase(std::vector<unsigned char>& bytes, unsigned offset, uint32_t delta) 
     memcpy(bytes.data() + offset, &value, sizeof(value));
 }
 
-void InstallSelector(HANDLE process) {
+void InstallSelector(HANDLE process, uintptr_t hookAddress = entry) {
     unsigned char actual[sizeof(original)]{};
     SIZE_T received{};
-    Require(ReadProcessMemory(process, reinterpret_cast<void*>(entry), actual, sizeof(actual), &received)
+    Require(ReadProcessMemory(process, reinterpret_cast<void*>(hookAddress), actual, sizeof(actual), &received)
             && received == sizeof(actual) && memcmp(actual, original, sizeof(actual)) == 0,
             "Unexpected game entry bytes. Reference not installed.");
     auto* allocation = static_cast<unsigned char*>(VirtualAllocEx(process, nullptr,
@@ -50,13 +50,13 @@ void InstallSelector(HANDLE process) {
     DWORD previous{};
     Require(VirtualProtectEx(process, allocation, 4096, PAGE_EXECUTE_READ, &previous), "Cannot protect reference code.");
     unsigned char patch[sizeof(original)] = {0xe9, 0, 0, 0, 0, 0x90};
-    const uint32_t displacement = base - entry - 5;
+    const uint32_t displacement = base - hookAddress - 5;
     memcpy(patch + 1, &displacement, sizeof(displacement));
-    Require(VirtualProtectEx(process, reinterpret_cast<void*>(entry), sizeof(patch), PAGE_EXECUTE_READWRITE, &previous),
+    Require(VirtualProtectEx(process, reinterpret_cast<void*>(hookAddress), sizeof(patch), PAGE_EXECUTE_READWRITE, &previous),
             "Cannot prepare the reference hook.");
-    Write(process, reinterpret_cast<void*>(entry), patch, sizeof(patch));
+    Write(process, reinterpret_cast<void*>(hookAddress), patch, sizeof(patch));
     DWORD ignored{};
-    Require(VirtualProtectEx(process, reinterpret_cast<void*>(entry), sizeof(patch), previous, &ignored)
+    Require(VirtualProtectEx(process, reinterpret_cast<void*>(hookAddress), sizeof(patch), previous, &ignored)
             && FlushInstructionCache(process, nullptr, 0), "Cannot finalize the reference hook.");
 }
 

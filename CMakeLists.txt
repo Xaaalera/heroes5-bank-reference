@@ -20,8 +20,5 @@ if(BUILD_TESTING)
     target_compile_definitions(bank_selector_test PRIVATE UNICODE _UNICODE NOMINMAX WIN32_LEAN_AND_MEAN)
     target_include_directories(bank_selector_test PRIVATE devkit/native "${BANK_PAYLOAD_DIR}")
     target_link_libraries(bank_selector_test PRIVATE bcrypt comdlg32 user32)
-    # Keep this disposable fixture away from the pinned fake game addresses.
-    # Production launchers retain the compiler's normal ASLR settings.
-    target_link_options(bank_selector_test PRIVATE /BASE:0x10000000 /DYNAMICBASE:NO)
     add_test(NAME native_bank_selector COMMAND bank_selector_test)
 endif()
