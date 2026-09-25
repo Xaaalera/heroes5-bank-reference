@@ -118,6 +118,26 @@ int Run(int count, wchar_t* arguments[]) {
 
 } // namespace
 
+extern "C" __declspec(dllexport) DWORD WorkshopBankReferenceInstall() {
+    static bool installed = false;
+    if (installed) { return 1; }
+    try {
+        const auto executable = universe_player::LauncherDirectory() / L"H5_Game.exe";
+        universe_player::VerifyGame(executable);
+        const auto directory = executable.parent_path().parent_path() / L"UserMODs";
+        Require(!std::filesystem::exists(directory / L"workshop-object-reference.h5u"),
+                "Remove the old workshop-object-reference.h5u text prototype before enabling bank reference.");
+        Require(universe_player::Sha256(directory / L"workshop-army-reference.h5u") == bank_payload::packageHash,
+                "Install the matching workshop-army-reference.h5u in UserMODs.");
+        InstallSelector(GetCurrentProcess());
+        installed = true;
+        return 1;
+    } catch (const std::exception& error) {
+        OutputDebugStringA(error.what());
+        return 0;
+    }
+}
+
 int wmain(int count, wchar_t* arguments[]) {
     if (count == 1) { FreeConsole(); }
     try { return Run(count, arguments); }

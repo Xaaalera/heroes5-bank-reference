@@ -2,85 +2,83 @@
 
 ## RU
 
-Справочник **возможных армий хранилищ** для [Heroes V Universe](https://h5lobby.com/): портреты, тиры, диапазоны и альтернативы. Фактическую скрытую охрану объекта не читает. [Описание и чтение карточек](https://xaaalera.github.io/heroes5-knowledge/players/bank-reference/) · [каталог хранилищ](https://xaaalera.github.io/heroes5-knowledge/reference/banks/).
+Справочник **возможных армий хранилищ** для [Heroes V Universe](https://h5lobby.com/): портреты, тиры, диапазоны и альтернативы. Фактическую скрытую охрану не читает. [Описание и пример](https://xaaalera.github.io/heroes5-knowledge/players/bank-reference/) · [каталог и расчёт диапазонов](https://xaaalera.github.io/heroes5-knowledge/reference/banks/).
 
-### Для игрока
+### Игроку: обычный запуск
 
-Готовый пакет готовится к предварительному выпуску в [Releases](https://github.com/Xaaalera/heroes5-bank-reference/releases). Code → Download ZIP скачивает исходники и не подходит для установки.
+Поставка — DLL и H5U, без отдельного EXE. Версия 0.1.0-preview.2 экспериментальная; [Releases](https://github.com/Xaaalera/heroes5-bank-reference/releases) содержит выпуски. Старый EXE-кандидат отменён. Code → Download ZIP скачивает исходники.
 
-1. Закрой игру и редактор. Распакуй папку `Heroes5BankReference` рядом с игровой папкой `bin`.
-2. Двойным щелчком открой `workshop_bank_reference.exe`. Если игра не найдена рядом, выбери её `bin/H5_Game.exe` в окне выбора файла.
-3. Загрузчик проверяет версию, копирует свой `workshop-army-reference.h5u` в `UserMODs` и запускает игру со справочником. Отличающийся файл с тем же именем не перезаписывается.
-4. На карте наведи на поддерживаемое хранилище. Карточка показывает возможные армии, а не разведанный состав.
+1. Закрой игру и редактор. Файлы пакета размещаются в установленной игре:
+   - bin/dinput8.dll — общий файл для обоих наших модов;
+   - bin/Heroes5Mods/WorkshopBankReference.dll;
+   - UserMODs/workshop-army-reference.h5u.
+2. Не перезаписывай dinput8.dll другого мода: совместимость не проверена. Штатные d3d9.dll, uni.dll и um.dll не заменяются.
+3. Если сохранился старый текстовый workshop-object-reference.h5u, убери его из UserMODs. Он добавляет длинное описание над портретами; новая DLL отказывается работать при этом конфликте.
+4. Запускай Heroes/Lobby как раньше. На карте наведи на поддерживаемое хранилище: должна появиться справка с возможными армиями.
 
-Python, Git и devkit игроку не нужны. Загрузчик и H5U должны лежать рядом. Проверяется [конкретная сборка Universe](https://xaaalera.github.io/heroes5-knowledge/reference/universe-build/); игровые EXE/DLL на диске не патчатся.
+Python, Git и devkit игроку не нужны. DLL и H5U должны быть из одного выпуска. Поддерживается [закреплённая сборка игры](https://xaaalera.github.io/heroes5-knowledge/reference/universe-build/); несовместимость или ошибка модуля прекращает запуск с сообщением.
 
-**Удаление:** закрой игру. Удали `UserMODs/workshop-army-reference.h5u` и папку `Heroes5BankReference`. Для запуска без селектора используй обычный игровой EXE. Совместная работа с предиктором не подтверждена.
+Для удаления закрой игру и убери WorkshopBankReference.dll и workshop-army-reference.h5u из указанных папок. Другие UserMODs не трогай. Общий dinput8.dll удаляй только после всех наших DLL-модов и только если он установлен из нашего пакета.
 
-Нативный загрузчик новый: сборка и изолированные проверки не заменяют живую приёмку. Пакет пока не объявлен стабильным. Исторически в игре подтверждён тайник бесов, но не все хранилища и последние изменения оформления.
+### Что проверено
 
-### Разработчику: собрать пакет
+Обычный H5_Game.exe загрузил обе DLL. Предиктор прошёл пять инструментированных боёв с включённым справочником. После удаления старого текстового пакета получена чистая карточка склепа; A/B размещены на разных строках, окно помещается в кадре 1264×921. Все хранилища и разрешения экрана этим не проверены. Проверялся русский интерфейс; другие локализации не проверены. Сам интерфейс Heroes/Lobby отдельно не автоматизировался.
 
-Среда закреплена submodule [devkit 587e09c](https://github.com/Xaaalera/heroes5-mod-devkit/tree/587e09cc75014ca2cf443c486b46ad9bb9dc4b0e). Нужны Windows, Git, Python 3.10+ x64, CMake 3.21+ и Visual Studio 2022 C++ x86 tools. Игровые ресурсы в Git не входят.
+19 публичных названий сопоставлены с 12 подтверждёнными типами; каталог включает 13 семейств, привязка OrcDeposit не найдена. Переименованные объекты не поддерживаются. H5U SHA-256: 824a14b48fbdadce9ea0475b49bc4d1f1f6d2ef112ef8294b63cc1ea4ebf7f1e.
 
-PowerShell из новой папки; путь `../HeroesV-Universe` замени своей установленной игрой:
+### Разработчику
 
-```powershell
-git clone --recursive https://github.com/Xaaalera/heroes5-bank-reference.git
-cd heroes5-bank-reference
-python -m venv .venv
-.venv/Scripts/python -m pip install -r requirements-dev.txt
-$env:H5_WORKSPACE = [IO.Path]::GetFullPath('../bank-reference-workspace')
-$env:H5_GAME_DIR = (Resolve-Path '../HeroesV-Universe').Path
-.venv/Scripts/python devkit/scripts/mod-dev.py prepare --sandbox
-.venv/Scripts/python devkit/scripts/mod-dev.py build --sandbox --mod army-reference --source .
-.venv/Scripts/python scripts/build-player.py "$env:H5_WORKSPACE/.local/test-state/army-reference.h5u"
-cmake -S . -B .local/player-build -A Win32
-cmake --build .local/player-build --config Release
-ctest --test-dir .local/player-build -C Release --output-on-failure
-Copy-Item "$env:H5_WORKSPACE/.local/test-state/army-reference.h5u" .local/player-build/Release/workshop-army-reference.h5u
-```
+Закреплён [devkit 71509e4](https://github.com/Xaaalera/heroes5-mod-devkit/tree/71509e43af0faf080d8a47ed5b3ff8c72da2a3e9). Нужны Windows, Git, Python 3.10+ x64, CMake 3.21+ и Visual Studio 2022 C++ x86 tools. Игровые ресурсы не входят в Git. PowerShell; пример пути ../HeroesV-Universe замени своей установленной игрой:
 
-`prepare` выполняется один раз и не перезаписывает существующую тестовую копию. Команды выше ничего не запускают. Для проверки версии и пары EXE/H5U без записи/запуска:
+    git clone --recursive https://github.com/Xaaalera/heroes5-bank-reference.git
+    cd heroes5-bank-reference
+    python -m venv .venv
+    .venv/Scripts/python -m pip install -r requirements-dev.txt
+    $env:H5_WORKSPACE = [IO.Path]::GetFullPath('../bank-reference-workspace')
+    $env:H5_GAME_DIR = (Resolve-Path '../HeroesV-Universe').Path
+    .venv/Scripts/python devkit/scripts/mod-dev.py prepare --sandbox
+    .venv/Scripts/python devkit/scripts/mod-dev.py build --sandbox --mod army-reference --source .
+    .venv/Scripts/python scripts/build-player.py "$env:H5_WORKSPACE/.local/test-state/army-reference.h5u"
+    cmake -S . -B .local/player-build -A Win32
+    cmake --build .local/player-build --config Release
+    cmake --install .local/player-build --config Release --prefix .local/dist
+    cmake -S devkit/native -B .local/bootstrap -A Win32
+    cmake --build .local/bootstrap --config Release
+    cmake --install .local/bootstrap --config Release --prefix .local/dist
+    New-Item -ItemType Directory -Path .local/dist/UserMODs -Force
+    Copy-Item "$env:H5_WORKSPACE/.local/test-state/army-reference.h5u" .local/dist/UserMODs/workshop-army-reference.h5u
+    .venv/Scripts/python scripts/check.py
 
-```powershell
-.local/player-build/Release/workshop_bank_reference.exe --check --game "$env:H5_WORKSPACE/.local/test-game/bin/H5_Game.exe"
-```
+Prepare создаёт новую тестовую копию один раз и отказывается перезаписывать существующую. Команды выше не запускают игру. После изменения рецепта заново собираются H5U, generated header и DLL: в модуле закреплён хеш H5U.
 
-Для упаковки нужны только `workshop_bank_reference.exe`, соответствующий `workshop-army-reference.h5u` и инструкция игроку. После изменения рецепта заново собираются H5U, generated header и EXE: в EXE закреплён SHA-256 H5U.
+По умолчанию CMake install ставит только DLL. Прежний EXE остаётся диагностикой и устанавливается лишь явным --component Diagnostics; игроку он не поставляется. Не совмещай его установку hook с автоматическим подключением DLL.
 
-### Проверки и механизм
+Генератор получает code/data из закреплённого native-probe, вычисляет релокации через Capstone и сравнивает результат на трёх адресах с исходным генератором. WorkshopBankReferenceInstall проверяет игру/H5U/отсутствие текстового прототипа, затем ставит селектор в текущий процесс после проверки шести исходных байт 0x5f8800. Bootstrap останавливает запуск при отказе любого модуля.
 
-```powershell
-.venv/Scripts/python scripts/check.py
-```
-
-Шесть проверок: прежний счётчик/селектор в x86-эмуляторе, рецепт и подписи, отказ от неверных маршрутов, сборка нативного установщика на синтетических данных. CTest проверяет отказ на неверных/уже заменённых байтах и защиты памяти в собственном тестовом процессе. Дополнительно проверяются копирование H5U в пустую временную папку, повторная установка без перезаписи и отказ при отличающемся существующем файле. Игру эти тесты не запускают. Для них нужны CMake и x86-компилятор; отсутствие инструмента — ошибка, не PASS.
-
-Генератор на этапе сборки берёт `layout_trampoline` и `layout_data` закреплённого devkit, определяет relocations через Capstone и сравнивает результат на трёх адресах с исходным генератором. EXE использует готовые байты: запускает собственный процесс suspended, проверяет исходные шесть байт `0x5f8800`, устанавливает тот же селектор, восстанавливает защиту и продолжает запуск. Неудачная установка завершает только собственный новый процесс. При ошибке запуска уже установленный H5U может остаться; его удаление описано выше.
-
-19 публичных названий сопоставлены с 12 подтверждёнными типами; каталог включает 13 семейств, привязка OrcDeposit не найдена. Переименованные объекты не поддерживаются. Исходный H5U: SHA-256 `824a14b48fbdadce9ea0475b49bc4d1f1f6d2ef112ef8294b63cc1ea4ebf7f1e`. Новое подключение не расширяет доказанную область игровых проверок.
+Шесть проверок включают x86-счётчик/селектор, рецепт, неверные маршруты и нативный fixture на синтетических данных. Проверяются защиты памяти, неверный/уже заменённый hook, копирование H5U в пустую временную папку, повтор без перезаписи, сохранение отличающегося файла при отказе и неизменность источника. Это проверки без игры; CMake/компилятор обязательны.
 
 ## EN
 
-Reference possible bank armies for the linked Universe build: portraits, tiers, ranges and alternatives. It does not read actual hidden guards. See the wiki description and bank catalog linked above.
+Reference possible bank armies for the linked Universe build: portraits, tiers, ranges and alternatives. It does not read actual hidden guards. The wiki explains the cards and data.
 
-### Player package
+### Player installation
 
-A preview package is being prepared in Releases; the source ZIP is not an installer. Exit game/editor, extract `Heroes5BankReference` beside the game's `bin` folder and double-click `workshop_bank_reference.exe`. If needed, select the installed `bin/H5_Game.exe` in the file picker. Keep the EXE and its matching H5U together. No Python, Git or devkit installation is required for players.
+Use the DLL/H5U package, not a separate EXE or source ZIP. Version 0.1.0-preview.2 is experimental; the old EXE draft was withdrawn. Exit game/editor and place the shared bin/dinput8.dll, bin/Heroes5Mods/WorkshopBankReference.dll and UserMODs/workshop-army-reference.h5u under the installed game directory.
 
-The launcher validates the supported game, copies its `workshop-army-reference.h5u` into `UserMODs` without overwriting a different existing file, then starts the game with the selector. Hover a supported bank to see possible armies. Game EXE/DLL files remain untouched.
+Both mods share one bootstrap. Do not overwrite another mod's dinput8.dll without compatibility checks; original d3d9.dll, uni.dll and um.dll remain unchanged. Remove the old workshop-object-reference.h5u text prototype: it adds oversized descriptions, and the new DLL rejects that conflict.
 
-To remove: exit the game, delete `UserMODs/workshop-army-reference.h5u` and the mod folder. An ordinary game EXE launch omits the selector. Combined use with the predictor is unverified. This new native launch path has not yet received live acceptance and is not a stable release. Historical visual evidence covers the imp cache, not every bank or later presentation change.
+Start through Heroes/Lobby as usual. Hover a supported bank for possible armies. No player Python, Git or devkit installation is required. DLL and H5U must belong to the same release. The linked four-hash game build is required; a mismatch or module failure cancels startup with a message.
 
-### Developer build and checks
+To uninstall, exit and remove the bank DLL/H5U only. Leave unrelated UserMODs alone. Remove our shared dinput8.dll only after all our DLL mods are removed.
 
-The pinned devkit revision and shared PowerShell commands above are canonical. Requires Windows, Git, Python 3.10+ x64, CMake 3.21+ and Visual Studio 2022 x86 tools. Replace the example game path. Prepare creates a separate sandbox once; it never overwrites an existing one. Build commands do not start a game. `--check --game <H5_Game.exe>` validates binaries and the EXE/H5U pairing without writing or launching.
+### Evidence and development
 
-Distribute only the built EXE, matching H5U and player instructions. Recipe edits require rebuilding the H5U, generated header and EXE because the package hash is compiled into the launcher. Game resources are not committed to Git.
+Ordinary H5_Game.exe startup loaded both DLLs; five instrumented predictor battles passed with bank reference enabled. After removing the old text package, a clean crypt card showed separate A/B rows within a 1264×921 frame. This does not cover every bank or display size. The tested interface was Russian; other localizations are unverified. The Heroes/Lobby UI was not separately automated.
 
-Six checks cover the existing x86 counter/selector, recipe/labels, invalid routes, and a native build using synthetic routing data. CTest checks wrong/already-hooked entry rejection and memory protections inside its own disposable process. The same fixture also checks H5U copying into a fresh temporary directory, unchanged repeated installation and rejection of differing existing content. No game runs; absent CMake/compiler is a failure, not a pass.
+There are 19 public titles, 12 confirmed types and 13 catalog families, including an unresolved OrcDeposit binding. Renamed objects are unsupported. The shared H5U hash above identifies the resource build.
 
-The build generator consumes pinned devkit layout code/data, derives relocations through Capstone and compares rebasing at three addresses against the original generator. The native EXE uses those bytes without Python: creates its own suspended game, checks six original bytes at `0x5f8800`, installs the selector, restores protection and resumes. Setup failure terminates only that new child. If launch fails after resource installation, the owned H5U may remain; remove it as described above.
+Use the pinned SDK and shared PowerShell commands above with Windows, Git, Python 3.10+ x64, CMake 3.21+ and VS2022 C++ x86 tools. Replace the sample game path; prepare creates a fresh sandbox once. These commands do not launch the game. Default CMake install contains DLLs only. The EXE remains an explicit Diagnostics component, never a player artifact; do not combine its hook installation with automatic loading.
 
-The public catalog has 19 titles, 12 confirmed types and 13 families, including an unresolved OrcDeposit binding. Renamed objects are unsupported. The shared H5U hash above identifies the unchanged resource build. New launch code does not extend prior live-game evidence.
+The build generator freezes the pinned devkit selector/data, derives relocations and compares three rebases. The DLL validates the game, paired H5U and absence of the legacy text package before checking and patching entry 0x5f8800 in its own process. Bootstrap aborts startup on failure.
+
+Six game-free checks cover x86 behavior, recipe/routes, native memory protections and hook rejection, plus resource copying into a temporary directory, unchanged repeats and preservation of differing existing files/source. CMake/compiler availability is required. Recipe changes require rebuilding H5U, generated header and DLL together.
