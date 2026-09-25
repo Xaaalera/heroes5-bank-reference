@@ -1,0 +1,93 @@
+{
+  "diffHash": "356ea0d4b3c7ee987dae4c2ca4f9489de1f7dc415e4772e2239cc4dc50184b26",
+  "commitSha": "9339e09e2b97ad323dccd4d6d2bb752fd7767fbd",
+  "perAgent": {
+    "craft": {
+      "verdict": "PASS",
+      "score": 10
+    },
+    "docs": {
+      "score": 10,
+      "verdict": "PASS",
+      "findings": [],
+      "claims": [
+        {
+          "path": "AGENTS.md",
+          "disposition": "judged"
+        },
+        {
+          "path": "README.md",
+          "disposition": "judged"
+        }
+      ],
+      "summary": {
+        "agent": "docs",
+        "verdict": "PASS",
+        "score": 10,
+        "counts": {
+          "blocker": 0,
+          "major": 0,
+          "minor": 0,
+          "advisory": 0
+        },
+        "one_line": "The bank DLL/H5U delivery guide matches code and limits the combined live evidence accurately."
+      },
+      "review": {
+        "reviewer": "/root/review_craft",
+        "files": [
+          "AGENTS.md",
+          "README.md"
+        ],
+        "criteria": {
+          "purpose": {
+            "verdict": "PASS",
+            "evidence": "Read AGENTS.md and README.md, the two changed Markdown files, against bank CMake/plugin source and the shared bootstrap contract. The owner-directed bank delivery is DLL plus H5U during ordinary Heroes/Lobby startup, with no separate player EXE. README separates player installation, bounded live visual result and developer build/tests while keeping hidden selected guards out of its claimed output."
+          },
+          "structure": {
+            "verdict": "PASS",
+            "evidence": "README leads with player file layout, ordinary startup, uninstall and limited evidence, then developer-only build and mechanism details. AGENTS states the no-player-EXE rule and synchronization requirement. CMake default install places WorkshopBankReference.dll under bin/Heroes5Mods; workshop_bank_reference.exe remains Diagnostics/EXCLUDE_FROM_ALL. The H5U is copied into the build package separately and is paired to the compiled module by hash."
+          },
+          "specificity": {
+            "verdict": "PASS",
+            "evidence": "Player steps name bin/dinput8.dll, bin/Heroes5Mods/WorkshopBankReference.dll and UserMODs/workshop-army-reference.h5u; they warn against replacing foreign dinput8, stock d3d9/uni/um or leaving old workshop-object-reference.h5u text prototype. WorkshopBankReferenceInstall verifies the current game and paired H5U hash, rejects the legacy text package, then checks six original bytes at 0x5f8800 before installing its selector. README pins devkit 71509e4 and explains rebuild of H5U/generated header/DLL after recipe edits."
+          },
+          "reproducibility": {
+            "verdict": "PASS",
+            "evidence": "Parent reports six bank checks passing and the shared bootstrap loading both DLLs through an ordinary H5_Game.exe process. Public wiki evidence includes five predictor lifecycle cycles and a genuine 1264x921 crypt screenshot; I verified the screenshot hash 18beb8c79f7e627a52ecf9e5a510653a15be8f5f01cf4d4fcc762af1f9d4279e and separate A/B rows. Parent also reports missing bank H5U startup fails with one dialog and exit 1114, resource restored. This does not establish every bank/screen/localization, and the Heroes/Lobby UI was not separately automated."
+          },
+          "evidence": {
+            "verdict": "PASS",
+            "evidence": "The source diff adds a DLL-exported WorkshopBankReferenceInstall while retaining the old EXE only as explicit Diagnostics. The mod installer checks H5U and the old conflicting text prototype; the shared devkit bootstrap handles init failure. README correctly distinguishes prior imp-cache coverage from the new crypt observation and notes the five predictor cycles as combined-use lifecycle evidence, not a general bank validation. Game/private log claims were parent-provided; I examined public source, screenshot and summary JSON but did not run a game."
+          },
+          "applicability": {
+            "verdict": "PASS",
+            "evidence": "The package targets the pinned four-hash Universe build, uses one shared owned dinput8 for both mods, and must not overwrite another mod's dinput8 without compatibility checking. Bank DLL/H5U must come from the same release; other localizations, banks, display sizes and feature combinations remain incompletely checked. Player release availability is conditional: README directs readers to Releases and says an empty list means no package yet. No source ZIP or diagnostic EXE is sold as a player installer."
+          },
+          "translations": {
+            "verdict": "PASS",
+            "evidence": "RU and EN AGENTS/README agree on ordinary Heroes/Lobby launch, DLL/H5U paths, legacy text-package conflict, removal order, pinned SDK, 19 titles/12 types/13 families, bounded crypt/five-battle evidence and no universal coverage. EN uses the shared RU developer command block; release availability is conditional in both. No material contradiction found."
+          },
+          "maintenance": {
+            "verdict": "PASS",
+            "evidence": "AGENTS requires README/wiki/devkit/agent/release-note synchronization; the DLL-only site wiki was reviewed separately before the intended mod source pushes. CMake defaults to DLL-only player output, retaining diagnostic EXE only through an explicit component. README keeps tested devkit commit and H5U hash tied to this delivery. review:info lists exactly AGENTS.md and README.md for the final diff; no source file was edited by this reviewer."
+          }
+        },
+        "findings": []
+      }
+    },
+    "security": {
+      "verdict": "PASS",
+      "score": 10
+    },
+    "tests": {
+      "verdict": "PASS",
+      "score": 10
+    },
+    "architecture": {
+      "verdict": "PASS",
+      "score": 10
+    }
+  },
+  "overall": "PASS",
+  "timestamp": "2026-09-25T10:52:35.920Z"
+}
