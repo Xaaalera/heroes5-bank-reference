@@ -34,11 +34,11 @@ $env:H5_WORKSPACE = [IO.Path]::GetFullPath('../bank-reference-workspace')
 $env:H5_GAME_DIR = (Resolve-Path '../HeroesV-Universe').Path
 .venv/Scripts/python devkit/scripts/mod-dev.py prepare --sandbox
 .venv/Scripts/python devkit/scripts/mod-dev.py build --sandbox --mod army-reference --source .
-.venv/Scripts/python scripts/build-player.py "$env:H5_WORKSPACE/.local/army-reference.h5u"
+.venv/Scripts/python scripts/build-player.py "$env:H5_WORKSPACE/.local/test-state/army-reference.h5u"
 cmake -S . -B .local/player-build -A Win32
 cmake --build .local/player-build --config Release
 ctest --test-dir .local/player-build -C Release --output-on-failure
-Copy-Item "$env:H5_WORKSPACE/.local/army-reference.h5u" .local/player-build/Release/workshop-army-reference.h5u
+Copy-Item "$env:H5_WORKSPACE/.local/test-state/army-reference.h5u" .local/player-build/Release/workshop-army-reference.h5u
 ```
 
 `prepare` выполняется один раз и не перезаписывает существующую тестовую копию. Команды выше ничего не запускают. Для проверки версии и пары EXE/H5U без записи/запуска:
