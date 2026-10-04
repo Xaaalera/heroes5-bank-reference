@@ -11,8 +11,12 @@ from zipfile import ZipFile
 from capstone import Cs, CS_ARCH_X86, CS_MODE_32
 
 ROOT = Path(__file__).resolve().parents[1]
-sys.path.insert(0, str(ROOT / 'devkit/scripts'))
-SPEC = importlib.util.spec_from_file_location('reference_probe', ROOT / 'devkit/scripts/native-probe.py')
+DEVKIT = (ROOT / 'devkit').resolve()
+if ((ROOT.parents[1] / 'scripts/sync-subrepos.ps1').is_file()
+        and DEVKIT != (ROOT.parents[1] / 'devkit').resolve()):
+    raise RuntimeError('Workshop requires the single canonical devkit; run scripts/sync-subrepos.ps1')
+sys.path.insert(0, str(DEVKIT / 'scripts'))
+SPEC = importlib.util.spec_from_file_location('reference_probe', DEVKIT / 'scripts/native-probe.py')
 probe = importlib.util.module_from_spec(SPEC)
 SPEC.loader.exec_module(probe)
 BASE = 0x10000000

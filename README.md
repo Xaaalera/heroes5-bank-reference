@@ -1,5 +1,18 @@
 # Heroes V Bank Reference
 
+
+## Author and related projects / Автор и связанные проекты
+
+Автор / Author: [Xaaalera](https://github.com/Xaaalera) · [email](mailto:dampirsimpl@gmail.com) · [личный Telegram / personal Telegram](https://t.me/Victima).
+
+- [Deployment Preview / Предиктор](https://github.com/Xaaalera/heroes5-deployment-preview).
+- [Bank Reference / Справочник армий](https://github.com/Xaaalera/heroes5-bank-reference).
+- [Mod Devkit / Девкит](https://github.com/Xaaalera/heroes5-mod-devkit): shared development and test tools for both DLL mods.
+- [Knowledge source / Исходники базы](https://github.com/Xaaalera/heroes5-knowledge) · [public knowledge / база знаний](https://xaaalera.github.io/heroes5-knowledge/).
+- [Heroes V Universe / Heroes Lobby](https://h5lobby.com/).
+
+RU: личные проекты автора; не официальные продукты Universe. EN: Personal projects by the author, not official Universe products.
+
 ## RU
 
 Справочник **возможных армий хранилищ** для [Heroes V Universe](https://h5lobby.com/): портреты, тиры, диапазоны и альтернативы. Фактическую скрытую охрану не читает. [Описание и пример](https://xaaalera.github.io/heroes5-knowledge/players/bank-reference/) · [каталог и расчёт диапазонов](https://xaaalera.github.io/heroes5-knowledge/reference/banks/).
@@ -28,7 +41,9 @@ Python, Git и devkit игроку не нужны. DLL и H5U должны бы
 
 ### Разработчику
 
-Закреплён [devkit 71509e4](https://github.com/Xaaalera/heroes5-mod-devkit/tree/71509e43af0faf080d8a47ed5b3ff8c72da2a3e9). Нужны Windows, Git, Python 3.10+ x64, CMake 3.21+ и Visual Studio 2022 C++ x86 tools. Игровые ресурсы не входят в Git. PowerShell; пример пути ../HeroesV-Universe замени своей установленной игрой:
+Опубликованный preview.2 проверен с [devkit 71509e4](https://github.com/Xaaalera/heroes5-mod-devkit/tree/71509e43af0faf080d8a47ed5b3ff8c72da2a3e9). Нужны Windows, Git, Python 3.10+ x64, CMake 3.21+ и Visual Studio 2022 C++ x86 tools. Игровые ресурсы не входят в Git. PowerShell; пример пути ../HeroesV-Universe замени своей установленной игрой:
+
+В связанной мастерской `devkit/` этого мода — ссылка на единственный корневой SDK. Из корня мастерской выполнить `powershell -NoProfile -File scripts/sync-subrepos.ps1 -Check`, исправление — без `-Check`. Текущая версия задаётся HEAD общего SDK и gitlink мода; общие правки не копируются. Самостоятельный клон сохраняет обычный submodule. Перед выпуском закрепить SDK коммитом, синхронизировать gitlink и проверить потребителей.
 
     git clone --recursive https://github.com/Xaaalera/heroes5-bank-reference.git
     cd heroes5-bank-reference
@@ -78,6 +93,8 @@ Ordinary H5_Game.exe startup loaded both DLLs; five instrumented predictor battl
 There are 19 public titles, 12 confirmed types and 13 catalog families, including an unresolved OrcDeposit binding. Renamed objects are unsupported. The shared H5U hash above identifies the resource build.
 
 Use the pinned SDK and shared PowerShell commands above with Windows, Git, Python 3.10+ x64, CMake 3.21+ and VS2022 C++ x86 tools. Replace the sample game path; prepare creates a fresh sandbox once. These commands do not launch the game. Default CMake install contains DLLs only. The EXE remains an explicit Diagnostics component, never a player artifact; do not combine its hook installation with automatic loading.
+
+The historical SDK link identifies published preview.2 verification. In a linked workshop, the mod's devkit directory is a junction to the single top-level SDK; current HEAD/gitlink define its version. Run `scripts/sync-subrepos.ps1 -Check` from the workshop, repairing without `-Check`. Never copy shared edits between repos. Standalone clones retain normal pinned submodules; commit SDK changes, synchronize pins and reverify consumers before releasing.
 
 The build generator freezes the pinned devkit selector/data, derives relocations and compares three rebases. The DLL validates the game, paired H5U and absence of the legacy text package before checking and patching entry 0x5f8800 in its own process. Bootstrap aborts startup on failure.
 
