@@ -8,11 +8,14 @@ import tempfile
 import unittest
 from zipfile import ZipFile
 
-from reference_support import MOD_ROOT
+from reference_support import MOD_ROOT, DEVKIT
 
 SPEC = importlib.util.spec_from_file_location('player_build', MOD_ROOT / 'scripts/build-player.py')
 builder = importlib.util.module_from_spec(SPEC)
 SPEC.loader.exec_module(builder)
+
+from xalkit import compiler_setup
+from plugin_core import CoreBuild
 
 
 class PlayerBuildTests(unittest.TestCase):
@@ -30,17 +33,21 @@ class PlayerBuildTests(unittest.TestCase):
             graphics = root / 'sdk-d3d9.dll'
             graphics.write_bytes(b'synthetic SDK graphics build artifact')
             graphics_digest = hashlib.sha256(graphics.read_bytes()).hexdigest()
+            _, _, environment = compiler_setup({})
+            cmake = CoreBuild((DEVKIT / 'native').resolve(), root / 'sdk-tools', environment).cmake
+            ctest = cmake.with_name('ctest' + cmake.suffix)
             # Native CTest calls the production installer against its own memory,
             # never an actual game process and never a game resource package.
             commands = [
-                ['cmake', '-S', str(MOD_ROOT), '-B', str(root / 'build'), '-A', 'Win32',
+                [str(cmake), '-S', str(MOD_ROOT), '-B', str(root / 'build'), '-A', 'Win32',
                  '-DBANK_PAYLOAD_DIR=' + str(root / 'generated'),
                  '-DXKIT_GRAPHICS_FILE=' + str(graphics)],
-                ['cmake', '--build', str(root / 'build'), '--config', 'Release'],
-                ['ctest', '--test-dir', str(root / 'build'), '-C', 'Release', '--output-on-failure'],
+                [str(cmake), '--build', str(root / 'build'), '--config', 'Release'],
+                [str(ctest), '--test-dir', str(root / 'build'), '-C', 'Release', '--output-on-failure'],
             ]
             for command in commands:
-                completed = subprocess.run(command, capture_output=True, text=True, errors='replace', timeout=120)
+                completed = subprocess.run(command, env=environment, stdin=subprocess.DEVNULL,
+                                           capture_output=True, text=True, errors='replace', timeout=120)
                 self.assertEqual(completed.returncode, 0, completed.stdout + completed.stderr)
 
             plugin_project = (root / 'build/workshop_bank_plugin.vcxproj').read_text(encoding='utf-8-sig')
@@ -51,14 +58,27 @@ class PlayerBuildTests(unittest.TestCase):
 
             # The omitted-option delivery remains supported independently.
             stock_commands = [
-                ['cmake', '-S', str(MOD_ROOT), '-B', str(root / 'build'), '-DXKIT_GRAPHICS_FILE='],
-                ['cmake', '--build', str(root / 'build'), '--config', 'Release', '--target', 'workshop_bank_plugin'],
+                [str(cmake), '-S', str(MOD_ROOT), '-B', str(root / 'build'), '-DXKIT_GRAPHICS_FILE='],
+                [str(cmake), '--build', str(root / 'build'), '--config', 'Release', '--target', 'workshop_bank_plugin'],
             ]
             for command in stock_commands:
-                completed = subprocess.run(command, capture_output=True, text=True, errors='replace', timeout=120)
+                completed = subprocess.run(command, env=environment, stdin=subprocess.DEVNULL,
+                                           capture_output=True, text=True, errors='replace', timeout=120)
                 self.assertEqual(completed.returncode, 0, completed.stdout + completed.stderr)
             stock_project = (root / 'build/workshop_bank_plugin.vcxproj').read_text(encoding='utf-8-sig')
             self.assertNotIn('XKIT_GRAPHICS_SHA256', stock_project)
+
+            managed_commands = [
+                [str(cmake), '-S', str(MOD_ROOT), '-B', str(root / 'build'),
+                 '-DXKIT_GRAPHICS_FILE=' + str(graphics), '-DBANK_MANAGED_SELECTOR=ON'],
+                [str(cmake), '--build', str(root / 'build'), '--config', 'Release', '--target', 'workshop_bank_plugin'],
+                [str(root / 'build/Release/bank_selector_test.exe'),
+                 str(root / 'build/Release/WorkshopBankReference.dll')],
+            ]
+            for command in managed_commands:
+                completed = subprocess.run(command, env=environment, stdin=subprocess.DEVNULL,
+                                           capture_output=True, text=True, errors='replace', timeout=120)
+                self.assertEqual(completed.returncode, 0, completed.stdout + completed.stderr)
 
             # Exercise the production file installer, but only under this fresh
             # temporary directory. Existing differing content must survive.

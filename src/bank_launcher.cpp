@@ -4,6 +4,9 @@
 #include <cstring>
 #include <iostream>
 #include <vector>
+#ifdef BANK_MANAGED_SELECTOR
+#include "selector_runtime.hpp"
+#endif
 
 namespace {
 
@@ -119,6 +122,30 @@ int Run(int count, wchar_t* arguments[]) {
 
 } // namespace
 
+#ifdef BANK_MANAGED_SELECTOR
+// Query only immutable buffers. The SDK copies them before unloading this DLL;
+// no allocation, hook installation or game operation occurs during query.
+extern "C" __declspec(dllexport) const heroes5_sdk::BankSelectorPayload* Heroes5BankSelectorQuery() {
+    static constexpr heroes5_sdk::BankSelectorPayload payload{
+        .code = bank_payload::callbackCode,
+        .codeBytes = sizeof(bank_payload::callbackCode),
+        .initialData = bank_payload::data,
+        .dataBytes = sizeof(bank_payload::data),
+        .dataOffsets = bank_payload::dataRelocations,
+        .dataOffsetCount = std::size(bank_payload::dataRelocations),
+        .codeFixups = bank_payload::callbackCodeRelocations,
+        .codeFixupCount = std::size(bank_payload::callbackCodeRelocations),
+        .dataFixups = bank_payload::callbackDataRelocations,
+        .dataFixupCount = std::size(bank_payload::callbackDataRelocations),
+        .sourceCode = bank_payload::base,
+        .sourceData = bank_payload::base + 4096,
+        .dataSchema = bank_payload::dataSchema,
+        .packageSha256 = bank_payload::packageHash,
+    };
+    return &payload;
+}
+#endif
+
 extern "C" __declspec(dllexport) DWORD WorkshopBankReferenceInstall() {
     static bool installed = false;
     if (installed) { return 1; }
@@ -134,7 +161,35 @@ extern "C" __declspec(dllexport) DWORD WorkshopBankReferenceInstall() {
                 "Remove the old workshop-object-reference.h5u text prototype before enabling bank reference.");
         Require(universe_player::Sha256(directory / L"workshop-army-reference.h5u") == bank_payload::packageHash,
                 "Install the matching workshop-army-reference.h5u in UserMODs.");
+#ifdef BANK_MANAGED_SELECTOR
+        using Control = DWORD (WINAPI*)(void*);
+        const auto loader = GetModuleHandleW((executable.parent_path() / L"dinput8.dll").c_str());
+        const auto control = loader ? reinterpret_cast<Control>(GetProcAddress(loader, "Heroes5BankSelectorControl")) : nullptr;
+        Require(control != nullptr, "This development bank DLL requires the matching xkit selector loader.");
+        const auto& payload = *Heroes5BankSelectorQuery();
+        heroes5_sdk::SelectorRequest request;
+        const DWORD status = control(&request);
+        Require(status == ERROR_SUCCESS || status == ERROR_NOT_READY, "Cannot inspect the resident bank selector.");
+        request.expectedGeneration = request.generation;
+        request.sourceData = payload.sourceData;
+        request.dataSchema = payload.dataSchema;
+        if (status == ERROR_NOT_READY) {
+            request.action = heroes5_sdk::SelectorAction::Initialize;
+            request.bytes = payload.initialData; request.byteCount = payload.dataBytes;
+            request.stateOffsets = payload.dataOffsets;
+            request.stateOffsetCount = payload.dataOffsetCount;
+            Require(control(&request) == ERROR_SUCCESS, "Cannot initialize resident bank route state.");
+            request.expectedGeneration = request.generation;
+        }
+        request.action = heroes5_sdk::SelectorAction::Replace;
+        request.bytes = payload.code; request.byteCount = payload.codeBytes;
+        request.sourceCode = payload.sourceCode;
+        request.codeFixups = payload.codeFixups; request.codeFixupCount = payload.codeFixupCount;
+        request.dataFixups = payload.dataFixups; request.dataFixupCount = payload.dataFixupCount;
+        Require(control(&request) == ERROR_SUCCESS, "Resident bank selector rejected the code or retained-state layout.");
+#else
         InstallSelector(GetCurrentProcess());
+#endif
         installed = true;
         return 1;
     } catch (const std::exception& error) {

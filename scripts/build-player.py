@@ -22,10 +22,11 @@ SPEC.loader.exec_module(probe)
 BASE = 0x10000000
 
 
-def payload(routes):
+def payload(routes, *, return_to_caller=False):
     """Keep game addresses fixed while rebasing only owned code/data references."""
-    code = probe.layout_trampoline(BASE, BASE + 4096, routes)
-    alternate = probe.layout_trampoline(BASE + 0x10000000, BASE + 0x10001000, routes)
+    code = probe.layout_trampoline(BASE, BASE + 4096, routes, return_to_caller=return_to_caller)
+    alternate = probe.layout_trampoline(BASE + 0x10000000, BASE + 0x10001000, routes,
+                                       return_to_caller=return_to_caller)
     if len(code) != len(alternate) or len(code) > 4096:
         raise ValueError('Unsupported selector code layout')
     decoder = Cs(CS_ARCH_X86, CS_MODE_32)
@@ -54,7 +55,8 @@ def payload(routes):
     for address in (0x12340000, 0x02000000, 0x60000000):
         rebased_code = rebase(code, relocations, address - BASE)
         rebased_data = rebase(data, [(offset, 1) for offset in offsets], address - BASE)
-        if rebased_code != probe.layout_trampoline(address, address + 4096, routes):
+        if rebased_code != probe.layout_trampoline(address, address + 4096, routes,
+                                                  return_to_caller=return_to_caller):
             raise ValueError('Selector code rebase differs from devkit')
         if rebased_data != probe.layout_data(address + 4096, routes):
             raise ValueError('Selector data rebase differs from devkit')
@@ -73,19 +75,41 @@ def generate(package, output):
     with ZipFile(package) as archive:
         routes = json.loads(archive.read('UI/WorkshopArmy/routes.json').decode('utf-8'))
     code, data, relocations, offsets = payload(routes)
-    lines = ['#pragma once', '#include <cstdint>', 'namespace bank_payload {',
+    callback_code, callback_data, callback_relocations, callback_offsets = payload(routes, return_to_caller=True)
+    if callback_data != data or callback_offsets != offsets:
+        raise ValueError('Managed selector must use the same route state layout')
+    # External CALL displacements follow code placement; absolute route/cache
+    # references follow the retained data placement. Verify this distinction
+    # independently rather than assuming a generation owns its route state.
+    callback_code_relocations = [item for item in callback_relocations if item[1] < 0]
+    callback_data_relocations = [item for item in callback_relocations if item[1] > 0]
+    for code_address, data_address in [(0x12340000, 0x60001000),
+                                       (0x02000000, 0x12341000),
+                                       (0x60000000, 0x02001000)]:
+        rebased_callback = rebase(callback_code, callback_code_relocations, code_address - BASE)
+        rebased_callback = rebase(rebased_callback, callback_data_relocations, data_address - BASE - 4096)
+        if rebased_callback != probe.layout_trampoline(
+                code_address, data_address, routes, return_to_caller=True):
+            raise ValueError('Managed selector code and retained route state cannot relocate independently')
+    lines = ['#pragma once', '#include <cstdint>', '#include <array>', '#include "selector_runtime.hpp"', 'namespace bank_payload {',
              f'constexpr uint32_t base = 0x{BASE:x};',
              f'constexpr char packageHash[] = "{hashlib.sha256(package.read_bytes()).hexdigest()}";',
-             'struct Relocation { unsigned offset; int direction; };']
-    for name, values in [('code', code), ('data', data)]:
+             'using Relocation = heroes5_sdk::SelectorFixup;']
+    lines.append('constexpr std::array<unsigned char, 32> dataSchema = {' +
+                 ','.join(str(value) for value in hashlib.sha256(data).digest()) + '};')
+    for name, values in [('code', code), ('data', data), ('callbackCode', callback_code)]:
         lines.append(f'constexpr unsigned char {name}[] = {{' + ','.join(str(value) for value in values) + '};')
     lines.append('constexpr Relocation codeRelocations[] = {' +
                  ','.join('{' + f'{offset},{direction}' + '}' for offset, direction in relocations) + '};')
     lines.append('constexpr unsigned dataRelocations[] = {' + ','.join(map(str, offsets)) + '};')
+    lines.append('constexpr Relocation callbackCodeRelocations[] = {' +
+                 ','.join('{' + f'{offset},{direction}' + '}' for offset, direction in callback_code_relocations) + '};')
+    lines.append('constexpr Relocation callbackDataRelocations[] = {' +
+                 ','.join('{' + f'{offset},{direction}' + '}' for offset, direction in callback_data_relocations) + '};')
     lines.append('}')
     output.parent.mkdir(parents=True, exist_ok=True)
     output.write_text('\n'.join(lines) + '\n', encoding='ascii')
-    return {'routes': len(routes), 'code_bytes': len(code), 'data_bytes': len(data),
+    return {'routes': len(routes), 'code_bytes': len(code), 'callback_code_bytes': len(callback_code), 'data_bytes': len(data),
             'package_sha256': hashlib.sha256(package.read_bytes()).hexdigest()}
 
 
