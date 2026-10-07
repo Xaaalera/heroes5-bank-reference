@@ -1,0 +1,784 @@
+{
+  "diffHash": "f1c68cdf8d9d7de0a08aecf5dbc1187259c3955672d9a7eb23847f8eef8128cf",
+  "commitSha": "3c14397f59a56cfe40f9eb10c8f4297377641c8e",
+  "perAgent": {
+    "craft": {
+      "agent": "craft",
+      "verdict": "PASS",
+      "score": 10,
+      "counts": {
+        "blocker": 0,
+        "major": 0,
+        "minor": 0,
+        "advisory": 0
+      },
+      "one_line": "PASS 10/10: no concrete naming, dead-code, duplication, placement or responsibility defect found in the 16-path cumulative consumer publication diff.",
+      "reviewer": "/root/game_api_craft",
+      "review": {
+        "reviewer": "/root/game_api_craft",
+        "scope": {
+          "repository": "army-reference",
+          "base": "e5f97227c81eeab15146d713b9db345b7794d1e0",
+          "head": "8e0561a0e6f52e09476365c4d2d9c6359bf5a177",
+          "worktree_patch_sha256": "863a3bf761d078aa1c01c94d0be6dd002724fd1c2954a23c679e8791c4fde8dc",
+          "devkit_pin": "5f4af7931aaf431fd364f0386d927ce7a718c698",
+          "game_api_pin": "2aa326d4463243e7b7d43aea6f8b389592966681",
+          "description": "Entire cumulative base-to-current-worktree diff, including staged SDK pin; 16 changed paths, with referenced canonical SDK generator, selector ABI, named workflow and compiler discovery read for reuse evidence."
+        },
+        "skills": {
+          "loaded": [
+            "solid",
+            "ockham",
+            "conventions",
+            "ui-strings",
+            "responsive-layout"
+          ],
+          "applicability": "SOLID/Ockham applied to native and Python responsibilities/reuse. JS conventions were read but no JS/TS changed. UI localization/layout guides were read; changed strings are native developer diagnostics and test fixtures, with no changed player layout or localization catalog."
+        },
+        "findings": [],
+        "claims": [
+          {
+            "path": ".claude/review.config.json",
+            "disposition": "judged"
+          },
+          {
+            "path": ".gitmodules",
+            "disposition": "judged"
+          },
+          {
+            "path": ".review/attestations/2647c65bb61cffd64a939749ee804e4a5da4b8da92eb61dc19d1dfa8aac31331.json",
+            "disposition": "judged"
+          },
+          {
+            "path": ".review/attestations/e340e97182f4e6c2dd58c53f2f5b1e3fa5883b739c6a0e990fda49e236bcf8ff.json",
+            "disposition": "judged"
+          },
+          {
+            "path": "AGENTS.md",
+            "disposition": "judged"
+          },
+          {
+            "path": "CMakeLists.txt",
+            "disposition": "judged"
+          },
+          {
+            "path": "CONTRIBUTING.md",
+            "disposition": "judged"
+          },
+          {
+            "path": "README.md",
+            "disposition": "judged"
+          },
+          {
+            "path": "devkit",
+            "disposition": "judged"
+          },
+          {
+            "path": "game-api",
+            "disposition": "judged"
+          },
+          {
+            "path": "mod.json",
+            "disposition": "judged"
+          },
+          {
+            "path": "scripts/build-player.py",
+            "disposition": "judged"
+          },
+          {
+            "path": "src/bank_launcher.cpp",
+            "disposition": "judged"
+          },
+          {
+            "path": "tests/bank_selector_test.cpp",
+            "disposition": "judged"
+          },
+          {
+            "path": "tests/test_native_reference.py",
+            "disposition": "judged"
+          },
+          {
+            "path": "tests/test_player_build.py",
+            "disposition": "judged"
+          }
+        ],
+        "evidence": [
+          "Read project AGENTS, CONTRIBUTING, review config and canonical SDK craft contract.",
+          "Read prior bank-consumer-cmake-path-failure, subsequent bank-check-toolchain-discovery and final bank-current-sdk-check receipts; final receipt records exit 0 in 20.7855793 seconds. No checks were rerun.",
+          "Compiler setup and CMake resolution reuse xalkit.compiler_setup and plugin_core.CoreBuild; no second compiler-discovery implementation was added.",
+          "Generated managed payload extends canonical native-probe.layout_trampoline(return_to_caller=True), shares SDK SelectorFixup and exposes SDK BankSelectorPayload; BankLayout signature is imported from canonical Game API.",
+          "Query descriptor, resident installation and diagnostic launcher have distinct concrete callers; managed and ordinary player paths are explicitly selected. Added names describe callback, generation, state, fixups and fixture purpose while preserving ABI names.",
+          "mod.json native_adapter bank-selector connects to the pinned SDK named build/start/release implementation. README separates developer commands from ordinary DLL/H5U player delivery and identifies exact player-archive card rendering as unverified.",
+          "Read bank-player-archive receipt: exact archive ordinary flags0 launch, selector verification and normal exit, without visual card claim. Read bank-human-card-core-live-final receipt, which retains its separate development lifecycle and visual verification fields."
+        ],
+        "limits": [
+          "Static read-only review; no source edits, builds, tests, game launch, focus, keyboard or mouse use.",
+          "Existing receipts were inspected, not reproduced; no live acceptance beyond their recorded scope.",
+          "The SDK gitlink and referenced canonical interfaces/workflow were examined for consumer reuse; this is not a fresh review of the SDK entire repository.",
+          "Current worktree remains uncommitted; this report is not an attestation or authorization to publish, and must be associated with the unchanged reviewed diff."
+        ],
+        "summary": {
+          "agent": "craft",
+          "verdict": "PASS",
+          "score": 10,
+          "counts": {
+            "blocker": 0,
+            "major": 0,
+            "minor": 0,
+            "advisory": 0
+          },
+          "one_line": "PASS 10/10: no concrete naming, dead-code, duplication, placement or responsibility defect found in the 16-path cumulative consumer publication diff."
+        }
+      }
+    },
+    "architecture": {
+      "agent": "architecture",
+      "verdict": "PASS",
+      "score": 10,
+      "counts": {
+        "blocker": 0,
+        "major": 0,
+        "minor": 0,
+        "advisory": 0
+      },
+      "one_line": "Immutable bank descriptors, resident state ownership, managed/player separation and canonical pinned dependencies satisfy the reviewed architecture contracts.",
+      "reviewer": "/root/sdk_native_architecture_review (independent Codex architecture reviewer)",
+      "review": {
+        "reviewer": "/root/sdk_native_architecture_review (independent Codex architecture reviewer)",
+        "repository": "D:\\Pk\\Heroes5ModsFolder\\mods\\army-reference",
+        "base": "e5f97227c81eeab15146d713b9db345b7794d1e0",
+        "head": "8e0561a0e6f52e09476365c4d2d9c6359bf5a177",
+        "scope": "Full cumulative bank-repository worktree architecture review against the configured fixed base, all16 changed paths including staged SDK gitlink. Review artifact only; no source edits/build/test/game/input. One lens report, not a full publication attestation.",
+        "findings": [],
+        "claims": [
+          {
+            "path": ".claude/review.config.json",
+            "disposition": "judged",
+            "reason": "Judged applicable ownership, canonical dependency/pin, player/development separation and independent delivery contracts."
+          },
+          {
+            "path": ".gitmodules",
+            "disposition": "judged",
+            "reason": "Judged applicable ownership, canonical dependency/pin, player/development separation and independent delivery contracts."
+          },
+          {
+            "path": ".review/attestations/2647c65bb61cffd64a939749ee804e4a5da4b8da92eb61dc19d1dfa8aac31331.json",
+            "disposition": "declined",
+            "reason": "Historical attestations inventoried; no current architectural correctness or reviewer identity is inferred from them."
+          },
+          {
+            "path": ".review/attestations/e340e97182f4e6c2dd58c53f2f5b1e3fa5883b739c6a0e990fda49e236bcf8ff.json",
+            "disposition": "declined",
+            "reason": "Historical attestations inventoried; no current architectural correctness or reviewer identity is inferred from them."
+          },
+          {
+            "path": "AGENTS.md",
+            "disposition": "judged",
+            "reason": "Judged applicable ownership, canonical dependency/pin, player/development separation and independent delivery contracts."
+          },
+          {
+            "path": "CMakeLists.txt",
+            "disposition": "judged",
+            "reason": "Judged applicable ownership, canonical dependency/pin, player/development separation and independent delivery contracts."
+          },
+          {
+            "path": "CONTRIBUTING.md",
+            "disposition": "judged",
+            "reason": "Judged applicable ownership, canonical dependency/pin, player/development separation and independent delivery contracts."
+          },
+          {
+            "path": "README.md",
+            "disposition": "judged",
+            "reason": "Judged applicable ownership, canonical dependency/pin, player/development separation and independent delivery contracts."
+          },
+          {
+            "path": "devkit",
+            "disposition": "judged",
+            "reason": "Judged applicable ownership, canonical dependency/pin, player/development separation and independent delivery contracts."
+          },
+          {
+            "path": "game-api",
+            "disposition": "judged",
+            "reason": "Judged applicable ownership, canonical dependency/pin, player/development separation and independent delivery contracts."
+          },
+          {
+            "path": "mod.json",
+            "disposition": "judged",
+            "reason": "Judged applicable ownership, canonical dependency/pin, player/development separation and independent delivery contracts."
+          },
+          {
+            "path": "scripts/build-player.py",
+            "disposition": "judged",
+            "reason": "Judged applicable ownership, canonical dependency/pin, player/development separation and independent delivery contracts."
+          },
+          {
+            "path": "src/bank_launcher.cpp",
+            "disposition": "judged",
+            "reason": "Judged applicable ownership, canonical dependency/pin, player/development separation and independent delivery contracts."
+          },
+          {
+            "path": "tests/bank_selector_test.cpp",
+            "disposition": "judged",
+            "reason": "Read for the architecture contract exercised: immutable descriptor/module copies, independent code/data relocation, retained-state lifecycle and managed/player build separation. No coverage-quality or test-execution claim."
+          },
+          {
+            "path": "tests/test_native_reference.py",
+            "disposition": "judged",
+            "reason": "Read for the architecture contract exercised: immutable descriptor/module copies, independent code/data relocation, retained-state lifecycle and managed/player build separation. No coverage-quality or test-execution claim."
+          },
+          {
+            "path": "tests/test_player_build.py",
+            "disposition": "judged",
+            "reason": "Read for the architecture contract exercised: immutable descriptor/module copies, independent code/data relocation, retained-state lifecycle and managed/player build separation. No coverage-quality or test-execution claim."
+          }
+        ],
+        "summary": {
+          "agent": "architecture",
+          "verdict": "PASS",
+          "score": 10,
+          "counts": {
+            "blocker": 0,
+            "major": 0,
+            "minor": 0,
+            "advisory": 0
+          },
+          "one_line": "Immutable bank descriptors, resident state ownership, managed/player separation and canonical pinned dependencies satisfy the reviewed architecture contracts."
+        },
+        "reviewed_invariants": [
+          {
+            "where": "src/bank_launcher.cpp:128",
+            "evidence": "Heroes5BankSelectorQuery returns one constexpr descriptor referencing generated immutable buffers; it performs no allocation, hook installation or game operation. No mutable game root or callback owner escapes into this descriptor."
+          },
+          {
+            "where": "scripts/build-player.py:83",
+            "evidence": "Generator confirms shared data/offset layout between legacy and callback modes, splits code-displacement versus retained-data fixups, and compares independently relocated callback code/data with the canonical generator. SHA256 of initial route data establishes strict retained-data identity; installed H5U identity is separately embedded."
+          },
+          {
+            "where": "src/bank_launcher.cpp:167",
+            "evidence": "Managed install resolves the existing resident loader, observes generation, initializes copied state only when absent, then replaces code with expectedGeneration and dataSchema. Pinned SDK loader copies owned buffers, keeps resident data/UI-cache lifetime, and serializes invocation/replacement. Candidate update transport validates module-bounded spans under module/file lifetime before copying and releasing the module."
+          },
+          {
+            "where": "CMakeLists.txt:29",
+            "evidence": "BANK_MANAGED_SELECTOR defaultsOFF, applies only to the bank DLL and requires selected SDK graphics identity. Ordinary player build uses the bank install export and legacy selector, without developer client/Python runtime. Diagnostic EXE install is explicitly optional/excluded from default installation."
+          },
+          {
+            "where": "devkit",
+            "evidence": "Staged SDK pin5f4af7931aaf431fd364f0386d927ce7a718c698 equals actual shared SDK HEAD. Direct Game API pin2aa326d4463243e7b7d43aea6f8b389592966681 equals actual API HEAD and the SDK own pinned API. Standalone submodules and workshop canonical-junction generator guard preserve one shared implementation."
+          },
+          {
+            "where": "mod.json:3",
+            "evidence": "bank-selector recipe selects the supported canonical xkit adapter. SDK named start compiles managed mode; build/release explicitly compiles player mode and packages the bank own DLL/H5U plus described shared input/graphics infrastructure. No unrelated mod payload becomes mandatory."
+          }
+        ],
+        "guides_read": [
+          "AGENTS.md",
+          "CONTRIBUTING.md",
+          ".claude/review.config.json",
+          "devkit/AGENTS.md",
+          "devkit/.agents/review/review-architecture.md",
+          "C:/Users/dampi/.codex/skills/solid/SKILL.md",
+          "C:/Users/dampi/.codex/skills/ockham/SKILL.md"
+        ],
+        "evidence_limits": [
+          {
+            "path": "bank-human-card-core-live-final.json",
+            "supports": "Recorded101.9086s managed development run: populated cache continuity through bank/core replacement and native held-card capture; not an exact player-package card claim."
+          },
+          {
+            "path": "bank-player-latest-archive.json",
+            "supports": "Recorded6.1436s exact player archive flags0 ordinary startup, installed-selector verification and normal cleanup; explicitly no visual-card claim."
+          }
+        ],
+        "verification": {
+          "actions": "Read-only Git diffs/pins, source/contracts/fixtures and existing receipts; review JSON output only.",
+          "commands_exit": "All substantive reads/source/pin checks completed. No builds/tests/game/input executed.",
+          "tests": "Not rerun; no passed/failed/skipped test counts invented.",
+          "limits": [
+            "Trusted generated payloads and pinned game build/sites only; arbitrary native faults, side-effect rollback, schema migration and general multithread detours are outside this contract.",
+            "Current release/CI status was supplied by parent; this report independently checks staged/local dependency identities and source boundaries, not remote publishing credentials or CI execution.",
+            "Player ordinary-startup receipt does not establish every bank/localization/resolution or exact new-player-card rendering.",
+            "Historical attestation paths are explicitly declined; no older verdict was substituted for this review."
+          ]
+        },
+        "source_identity": {
+          ".claude/review.config.json": "b491a0c4161082c0e5d69c712e5d23a58d85ba3ac2e20463707f15c145e08b1f",
+          ".gitmodules": "b00b0389efc5ce4789a316d51c6f602a2a0e2f41030e251bb661a494221bbc2c",
+          ".review/attestations/2647c65bb61cffd64a939749ee804e4a5da4b8da92eb61dc19d1dfa8aac31331.json": "deleted",
+          ".review/attestations/e340e97182f4e6c2dd58c53f2f5b1e3fa5883b739c6a0e990fda49e236bcf8ff.json": "c76c25bd11aaf2a5eaa412378b8cf42c41985f4668458ce408cfd7859e845f62",
+          "AGENTS.md": "1425ef30798f35e19f969cc1e673a648401faa8b65532dda08ade598f90e0d84",
+          "CMakeLists.txt": "c6489fd5990727d8ada55ddf4109cd200d953648b6317ff2330bcf4c27a3d64e",
+          "CONTRIBUTING.md": "97ea5c14059043ba0714f7856ca5ce9e907aed2cb265a7c9804d92462b0ec0ff",
+          "README.md": "bca0abe1b6eda5db27afae3cfded03091321b35f864ec5ea43d0503addfdd758",
+          "devkit": "5f4af7931aaf431fd364f0386d927ce7a718c698",
+          "game-api": "2aa326d4463243e7b7d43aea6f8b389592966681",
+          "mod.json": "8d615aedb6b1bbccddd51914df8b0a50f05d8bb7a27630b247248a167916378d",
+          "scripts/build-player.py": "4d9723194b8cf688f77ee569a5a4d1d9a8d525e46abd281218153ce22ed0f9d9",
+          "src/bank_launcher.cpp": "2ee9e71e74c80abb97dbac0003fbf758ad364a6bf9f4c3223f2f5d6901a750ff",
+          "tests/bank_selector_test.cpp": "08595b960e4a1a195b0c50da44d2e14d98a1798955b8c4d9154f80cc894cc8c7",
+          "tests/test_native_reference.py": "a4758d97838cd56ff6346dc5b054e1a945197f5138b7d62752444a8270f7a9c9",
+          "tests/test_player_build.py": "27f69f5c27831c0b19fc2390a094b52a806bf75eee33b866ed75b394cd29d23f"
+        },
+        "created_at": "2026-10-07T22:09:32.906671+00:00"
+      }
+    },
+    "tests": {
+      "agent": "tests",
+      "verdict": "PASS",
+      "score": 9,
+      "counts": {
+        "blocker": 0,
+        "major": 0,
+        "minor": 1,
+        "advisory": 0
+      },
+      "one_line": "Meaningful managed/native descriptor, callback/state, xkit/stock build and standalone package tests support supplied live development/player evidence; one installer export negative/idempotence regression gap remains.",
+      "reviewer": "Codex independent tests reviewer /root/bank_xkit_tests",
+      "review": {
+        "reviewer": "Codex independent tests reviewer /root/bank_xkit_tests",
+        "repository": "D:\\Pk\\Heroes5ModsFolder\\mods\\army-reference",
+        "reviewed_base": "e5f97227c81eeab15146d713b9db345b7794d1e0",
+        "scope": "Independent read-only full cumulative TESTS publication review against configured fixed base e5f97227, including staged/unstaged current source and SDK gitlink5f4af793. All changed paths explicitly judged or declined. No build/test/game/input/source edit; only requested private report written.",
+        "skills_loaded": [
+          "tests-architecture",
+          "solid",
+          "ockham"
+        ],
+        "contract": "devkit/.agents/review/review-tests.md",
+        "exact_file_hashes": [
+          {
+            "path": ".claude/review.config.json",
+            "sha256": "b491a0c4161082c0e5d69c712e5d23a58d85ba3ac2e20463707f15c145e08b1f",
+            "working_git_blob": "e0e5be2841ab98347067c7c002018fb1994a1ae2"
+          },
+          {
+            "path": ".gitmodules",
+            "sha256": "b00b0389efc5ce4789a316d51c6f602a2a0e2f41030e251bb661a494221bbc2c",
+            "working_git_blob": "547148278ee5b1af847ac73b43943ee4e6b46b07"
+          },
+          {
+            "path": ".review/attestations/2647c65bb61cffd64a939749ee804e4a5da4b8da92eb61dc19d1dfa8aac31331.json",
+            "sha256": null,
+            "note": "Deleted relative to configured base; old content read during cumulative review."
+          },
+          {
+            "path": ".review/attestations/e340e97182f4e6c2dd58c53f2f5b1e3fa5883b739c6a0e990fda49e236bcf8ff.json",
+            "sha256": "c76c25bd11aaf2a5eaa412378b8cf42c41985f4668458ce408cfd7859e845f62",
+            "working_git_blob": "0c23f826b226c5289ea35668a2a0407953c2cdba"
+          },
+          {
+            "path": "AGENTS.md",
+            "sha256": "f2727894500e11af5a3879cb47b2881c6e60cbbf4798e8a2e6e007e62c15e2df",
+            "working_git_blob": "8f8c690c50576d79bd388a763639b4f3c06c1619"
+          },
+          {
+            "path": "CMakeLists.txt",
+            "sha256": "c6489fd5990727d8ada55ddf4109cd200d953648b6317ff2330bcf4c27a3d64e",
+            "working_git_blob": "9fdf73ff11fd1b94ae877dc92785d125446ec75b"
+          },
+          {
+            "path": "CONTRIBUTING.md",
+            "sha256": "97ea5c14059043ba0714f7856ca5ce9e907aed2cb265a7c9804d92462b0ec0ff",
+            "working_git_blob": "93d9ab489e329cddc34ea1adf40e44b0e1ca77ad"
+          },
+          {
+            "path": "README.md",
+            "sha256": "a08c80e0a6f4a9f4c3473406a9a88a11bab71bce3b1a8debdcf9a8e28b548f64",
+            "working_git_blob": "32955c2f5e67f64f7e1f74642b83338b5d921ab8"
+          },
+          {
+            "path": "devkit",
+            "index_entry": "160000 5f4af7931aaf431fd364f0386d927ce7a718c698 0\tdevkit",
+            "working_head": "5f4af7931aaf431fd364f0386d927ce7a718c698",
+            "sha256": null
+          },
+          {
+            "path": "game-api",
+            "index_entry": "160000 2aa326d4463243e7b7d43aea6f8b389592966681 0\tgame-api",
+            "working_head": "2aa326d4463243e7b7d43aea6f8b389592966681",
+            "sha256": null
+          },
+          {
+            "path": "mod.json",
+            "sha256": "8d615aedb6b1bbccddd51914df8b0a50f05d8bb7a27630b247248a167916378d",
+            "working_git_blob": "0421a4ee91702b6a1d0e92a7a3e555ec8d838474"
+          },
+          {
+            "path": "scripts/build-player.py",
+            "sha256": "4d9723194b8cf688f77ee569a5a4d1d9a8d525e46abd281218153ce22ed0f9d9",
+            "working_git_blob": "62fe81b0283455b70d8d198caf2ae9a4b3a68ede"
+          },
+          {
+            "path": "src/bank_launcher.cpp",
+            "sha256": "2ee9e71e74c80abb97dbac0003fbf758ad364a6bf9f4c3223f2f5d6901a750ff",
+            "working_git_blob": "8bdf8a572db162c4e4c72df3bc3ebaafee55d39f"
+          },
+          {
+            "path": "tests/bank_selector_test.cpp",
+            "sha256": "08595b960e4a1a195b0c50da44d2e14d98a1798955b8c4d9154f80cc894cc8c7",
+            "working_git_blob": "8a728f853a3eb7b94e963493e627e138091072e2"
+          },
+          {
+            "path": "tests/test_native_reference.py",
+            "sha256": "a4758d97838cd56ff6346dc5b054e1a945197f5138b7d62752444a8270f7a9c9",
+            "working_git_blob": "94b716091538df01fb5ee71124186b8cebd7e0f6"
+          },
+          {
+            "path": "tests/test_player_build.py",
+            "sha256": "27f69f5c27831c0b19fc2390a094b52a806bf75eee33b866ed75b394cd29d23f",
+            "working_git_blob": "8cf8f7f120ddfcea047fa102094d444c45288adb"
+          }
+        ],
+        "findings": [
+          {
+            "severity": "minor",
+            "why_this_severity": "Question5: a further edit can regress this new export boundary without failing the existing suite; no current install bypass is demonstrated.",
+            "where": "src/bank_launcher.cpp:149; tests/bank_selector_test.cpp:10",
+            "occurrences": 1,
+            "problem": "WorkshopBankReferenceInstall still has no direct negative/idempotence export-boundary tests.",
+            "scenario": "A later edit removes game/H5U verification, legacy text-package refusal or installed-state guard from the new installer export. The offline suite can still pass because it compiles the DLL but invokes its query export or lower-level routines; supplied live valid-package startup does not enter the refusal/repeat paths.",
+            "confidence": "high",
+            "evidence": "Re-read current cumulative code/tests and prior consumer-bank-tests.json. Native DLL descriptor fixture loads Heroes5BankSelectorQuery, validates/copies query buffers and unloads the DLL, but does not call WorkshopBankReferenceInstall. Other checks call InstallSelector, InstallPackage or SelectorRuntime directly. Exact player archive live receipt establishes successful installation only. Shared SDK staging/core rollback tests prove those SDK boundaries, not invalid game/H5U, old text-package conflict or repeated installer export calls."
+          }
+        ],
+        "claims": [
+          {
+            "path": ".claude/review.config.json",
+            "disposition": "judged"
+          },
+          {
+            "path": ".gitmodules",
+            "disposition": "declined",
+            "reason": "Read as documentation, dependency identity or historical review metadata. No local executable test delta; dependency review limited to directly used selector/build/package test seams, not a full SDK review."
+          },
+          {
+            "path": ".review/attestations/2647c65bb61cffd64a939749ee804e4a5da4b8da92eb61dc19d1dfa8aac31331.json",
+            "disposition": "declined",
+            "reason": "Read as documentation, dependency identity or historical review metadata. No local executable test delta; dependency review limited to directly used selector/build/package test seams, not a full SDK review."
+          },
+          {
+            "path": ".review/attestations/e340e97182f4e6c2dd58c53f2f5b1e3fa5883b739c6a0e990fda49e236bcf8ff.json",
+            "disposition": "declined",
+            "reason": "Read as documentation, dependency identity or historical review metadata. No local executable test delta; dependency review limited to directly used selector/build/package test seams, not a full SDK review."
+          },
+          {
+            "path": "AGENTS.md",
+            "disposition": "declined",
+            "reason": "Read as documentation, dependency identity or historical review metadata. No local executable test delta; dependency review limited to directly used selector/build/package test seams, not a full SDK review."
+          },
+          {
+            "path": "CMakeLists.txt",
+            "disposition": "judged"
+          },
+          {
+            "path": "CONTRIBUTING.md",
+            "disposition": "declined",
+            "reason": "Read as documentation, dependency identity or historical review metadata. No local executable test delta; dependency review limited to directly used selector/build/package test seams, not a full SDK review."
+          },
+          {
+            "path": "README.md",
+            "disposition": "declined",
+            "reason": "Read as documentation, dependency identity or historical review metadata. No local executable test delta; dependency review limited to directly used selector/build/package test seams, not a full SDK review."
+          },
+          {
+            "path": "devkit",
+            "disposition": "declined",
+            "reason": "Read as documentation, dependency identity or historical review metadata. No local executable test delta; dependency review limited to directly used selector/build/package test seams, not a full SDK review."
+          },
+          {
+            "path": "game-api",
+            "disposition": "declined",
+            "reason": "Read as documentation, dependency identity or historical review metadata. No local executable test delta; dependency review limited to directly used selector/build/package test seams, not a full SDK review."
+          },
+          {
+            "path": "mod.json",
+            "disposition": "judged"
+          },
+          {
+            "path": "scripts/build-player.py",
+            "disposition": "judged"
+          },
+          {
+            "path": "src/bank_launcher.cpp",
+            "disposition": "judged"
+          },
+          {
+            "path": "tests/bank_selector_test.cpp",
+            "disposition": "judged"
+          },
+          {
+            "path": "tests/test_native_reference.py",
+            "disposition": "judged"
+          },
+          {
+            "path": "tests/test_player_build.py",
+            "disposition": "judged"
+          }
+        ],
+        "summary": {
+          "agent": "tests",
+          "verdict": "PASS",
+          "score": 9,
+          "counts": {
+            "blocker": 0,
+            "major": 0,
+            "minor": 1,
+            "advisory": 0
+          },
+          "one_line": "Meaningful managed/native descriptor, callback/state, xkit/stock build and standalone package tests support supplied live development/player evidence; one installer export negative/idempotence regression gap remains."
+        },
+        "evidence": [
+          {
+            "path": "bank-check-toolchain-discovery.json and bank-check-toolchain-discovery-output.txt",
+            "result": "PASS exit0;6 tests,0 failures,0 errors,0 skipped; runner17.738s; outer18.2106365s",
+            "scope": "Actual supplied game-free bank run with canonical compiler discovery, xkit/stock/managed DLL builds, native CTest, descriptor export load and synthetic H5U installer checks."
+          },
+          {
+            "path": "bank-human-card-core-live-final.json",
+            "result": "passed true; native_application_observed true; automatic_core_completed true; native_card_visual_verified true; populated_cache_preserved true; filled_cache_survived_core true; source_restored true; bank_source_restored true; session game_exit_code0",
+            "scope": "Supplied owned managed development session: held native crypt-card screenshot and populated cache continuity through bank DLL/core updates. Generic scope strings remain conservative; final explicit visual_scope/native_card_visual_verified support this narrowly stated visual evidence. Reviewer did not independently inspect screenshot pixels."
+          },
+          {
+            "path": "bank-player-latest-archive.json",
+            "result": "passed true; selector installed/verified; game_exit_code0; cleanup_errors empty; archive_sha2564e874076032630da23984e4c02b5d9777d4a5bbb52068071042dadd14173933a",
+            "scope": "Exact standalone player archive ordinary flags0 startup and installed selector. Receipt explicitly makes no visual card claim; managed visual receipt is not transferred to this archive."
+          },
+          {
+            "path": "devkit/tests/test_xalkit.py:304-357",
+            "result": "Static read of independent package outcomes and negative branches",
+            "scope": "Same-source bank adapter archive includes exact DLL/H5U/facade bytes, excludes EXE, checks provenance digest, selects managed=False, rejects post-native resource changes/build failure and preserves prior archive. Backend mocked at SDK boundary; this is packaging behavior, not a compiler/game proof."
+          },
+          {
+            "path": "tests/bank_selector_test.cpp and tests/test_native_reference.py",
+            "result": "Static read plus supplied successful6-test run",
+            "scope": "Compiled descriptor load/module ownership/copy-before-unload, foreign/overflow span rejection; actual generated callback execution at separated code/state allocations; state survives8 replacements/rejection/stop/readd. Emulator validates matched/nonmatched/destroyed cached roots and callback calling convention. These observable results supplement build wiring comparisons, not mirror production output alone."
+          },
+          {
+            "path": "devkit/tests/test_plugin_watch.py bank tests",
+            "result": "Static read; parent reports SDK Python197/native7/Node8 passed",
+            "scope": "Bounded read of confirmed rollback/rejection, uncertain transport, state-change refusal, hook reactivation order and source/package supersession tests. Aggregate SDK counts supplied by parent, not independently executed or treated as whole-tree inspection."
+          },
+          {
+            "path": "consumer-bank-tests.json and bank-xkit-tests-final.json",
+            "result": "Earlier minor re-evaluated against current full base",
+            "scope": "Installer export refusal/repeat coverage gap remains relevant; old narrow-delta advisory is not reused as cumulative classification."
+          }
+        ],
+        "checks_performed": "Static diff/source/config/guide/evidence reads and exact file hashes only. No test execution, game launch, focus/input, source edits, remote operations or attestation.",
+        "limits": [
+          "No reviewer test/build/game/input execution; successful runs and live observations are supplied receipts.",
+          "Installer export negative/repeat cases remain untested directly; descriptor query checks are a distinct boundary.",
+          "Player archive live startup/installed selector/exit has no current exact-archive card rendering claim; managed crypt-card evidence belongs to the development session.",
+          "Native concurrency wait uses real OS events and a100ms absence-of-completion observation. This is useful integration evidence, not a deterministic proof for every scheduler; no repeated stability/mutation run supplied.",
+          "Generated callback/descriptor expected-byte comparisons establish ABI/build wiring; emulator/native invocation and retained-state assertions provide independent behavior coverage.",
+          "No full SDK dependency audit, all-bank/all-screen/all-localization acceptance, standalone relocated-clone fixture or new-option missing-artifact/reconfigure mutation evidence.",
+          "Snapshot includes current tracked source plus staged SDK gitlink. Any subsequent source edits require refreshing matching review evidence; this report does not itself authorize or perform remote publication."
+        ],
+        "reviewed_head": "8e0561a0e6f52e09476365c4d2d9c6359bf5a177",
+        "reviewed_sdk_gitlink": "5f4af7931aaf431fd364f0386d927ce7a718c698",
+        "worktree_status": [
+          " D .review/attestations/28f64b3bae4bad37c502daf243643e52778dea30c2375b6110433400a0d28d60.json",
+          " M AGENTS.md",
+          " M CMakeLists.txt",
+          " M CONTRIBUTING.md",
+          " M README.md",
+          "M  devkit",
+          " M mod.json",
+          " M scripts/build-player.py",
+          " M src/bank_launcher.cpp",
+          " M tests/bank_selector_test.cpp",
+          " M tests/test_native_reference.py",
+          " M tests/test_player_build.py"
+        ]
+      }
+    },
+    "docs": {
+      "agent": "docs",
+      "verdict": "PASS",
+      "score": 10,
+      "counts": {
+        "blocker": 0,
+        "major": 0,
+        "minor": 0,
+        "advisory": 0
+      },
+      "one_line": "The corrected cumulative bank docs describe pinned managed development and independent player delivery with explicit, receipt-bounded acceptance.",
+      "reviewer": "/root/bank_xkit_docs (independent Codex docs reviewer)",
+      "review": {
+        "reviewer": "/root/bank_xkit_docs (independent Codex docs reviewer)",
+        "files": [
+          "AGENTS.md",
+          "CONTRIBUTING.md",
+          "README.md"
+        ],
+        "criteria": {
+          "purpose": {
+            "verdict": "PASS",
+            "evidence": "All three Markdown files identify player/developer/agent audiences; possible-army reference excludes hidden actual guard inputs."
+          },
+          "structure": {
+            "verdict": "PASS",
+            "evidence": "README opens current development and separates player/developer instructions; AGENTS organizes operating rules and CONTRIBUTING review/check protocol."
+          },
+          "specificity": {
+            "verdict": "PASS",
+            "evidence": "README names independent bank DLL/H5U, shared loaders, retained original, conflict removal, managed option and build-time graphics trust; CONTRIBUTING names exact checker discovery behavior."
+          },
+          "reproducibility": {
+            "verdict": "PASS",
+            "evidence": "AGENTS separates standalone recursive pinned dependency setup from canonical workshop sync. README pins5f4af79/2aa326d, links SDK setup and command guide, gives clone/resource/CMake/paired graphics packaging steps and named start/build/release entry. Pinned SDK guide covers uv editable installation, setup/project root and recover-bank. CONTRIBUTING explains standalone compiler/CMake discovery; workflow not rerun by reviewer."
+          },
+          "evidence": {
+            "verdict": "PASS",
+            "evidence": "README now consistently limits managed acceptance to callback execution, crypt-card display and populated cache continuity through bank/core updates. Comment-only source edit proves continuity; differing marked callback proof covers changed execution. Exact flags0 player archive supports installed selector/startup/exit only and remains explicitly unverified for visual card rendering. Historical preview.2 evidence retains original scope."
+          },
+          "applicability": {
+            "verdict": "PASS",
+            "evidence": "Managed development is default-off CMake mode; player compiler path uses ordinary legacy startup. Players need no Python/SDK and retain originals locally. Specific crypt card/cache continuity does not prove every bank, viewport, localization or arbitrary data-schema migration."
+          },
+          "translations": {
+            "verdict": "PASS",
+            "evidence": "AGENTS/CONTRIBUTING/README RUEN duties, tool discovery, pin5f4af79, preview.3 delivery, installation/uninstall, managed card/cache verification and exact-player visual limit agree. Both opening paragraphs now identify published source and ready SDKv0.1.1-preview.1; old2026-10-04 status is historical."
+          },
+          "maintenance": {
+            "verdict": "PASS",
+            "evidence": "Current README pin matches staged SDK5f4af7931aaf431fd364f0386d927ce7a718c698 and current consumer check receipt. AGENTS distinguishes published legacy preview.3 from current managed development. README/CONTRIBUTING move with managed mode and checker discovery; dated older status is preserved as historical. Final opening links ready SDKv0.1.1-preview.1 in both languages. Parent reports SDKHEAD5f4af79, hosted CI37693645475 success and asset SHA543a811... matching sealed archive; no direct remote certification performed in this bounded docs recheck."
+          }
+        },
+        "findings": []
+      }
+    },
+    "security": {
+      "agent": "security",
+      "verdict": "PASS",
+      "score": 10,
+      "counts": {
+        "blocker": 0,
+        "major": 0,
+        "minor": 0,
+        "advisory": 0
+      },
+      "one_line": "No reachable security defect identified across the complete bank fixed-base worktree diff and its directly consumed pinned SDK boundaries.",
+      "reviewer": "/root/bank_runtime_review",
+      "review": {
+        "reviewer": "/root/bank_runtime_review",
+        "model": "gpt-6.1-sol",
+        "lens": "security",
+        "repository": "D:\\Pk\\Heroes5ModsFolder\\mods\\army-reference",
+        "base": "e5f97227c81eeab15146d713b9db345b7794d1e0",
+        "sdk_pin": "5f4af7931aaf431fd364f0386d927ce7a718c698",
+        "reviewed_at_utc": "2026-10-07T22:08:35.469201+00:00",
+        "tracked_diff_sha256": "384299c9cf710a87f8a793942a7804a51f9ec41d8eac44dbb540ef3e04511862",
+        "untracked_reviewed": {},
+        "findings": [],
+        "claims": [
+          {
+            "path": ".claude/review.config.json",
+            "disposition": "judged"
+          },
+          {
+            "path": ".gitmodules",
+            "disposition": "judged"
+          },
+          {
+            "path": ".review/attestations/2647c65bb61cffd64a939749ee804e4a5da4b8da92eb61dc19d1dfa8aac31331.json",
+            "disposition": "declined",
+            "reason": "Historical attestation data inspected for exposed credentials; historical PASS is not proof for this independent review."
+          },
+          {
+            "path": ".review/attestations/e340e97182f4e6c2dd58c53f2f5b1e3fa5883b739c6a0e990fda49e236bcf8ff.json",
+            "disposition": "declined",
+            "reason": "Historical attestation data inspected for exposed credentials; historical PASS is not proof for this independent review."
+          },
+          {
+            "path": "AGENTS.md",
+            "disposition": "declined",
+            "reason": "Changed documentation inspected for unsafe installation/destruction instructions and public secret/original-file exposure; no reachable security defect identified."
+          },
+          {
+            "path": "CMakeLists.txt",
+            "disposition": "judged"
+          },
+          {
+            "path": "CONTRIBUTING.md",
+            "disposition": "declined",
+            "reason": "Changed documentation inspected for unsafe installation/destruction instructions and public secret/original-file exposure; no reachable security defect identified."
+          },
+          {
+            "path": "README.md",
+            "disposition": "declined",
+            "reason": "Changed documentation inspected for unsafe installation/destruction instructions and public secret/original-file exposure; no reachable security defect identified."
+          },
+          {
+            "path": "devkit",
+            "disposition": "judged"
+          },
+          {
+            "path": "game-api",
+            "disposition": "judged"
+          },
+          {
+            "path": "mod.json",
+            "disposition": "judged"
+          },
+          {
+            "path": "scripts/build-player.py",
+            "disposition": "judged"
+          },
+          {
+            "path": "src/bank_launcher.cpp",
+            "disposition": "judged"
+          },
+          {
+            "path": "tests/bank_selector_test.cpp",
+            "disposition": "declined",
+            "reason": "Fixture/test diff inspected for security boundary assertions and exposed secrets; synthetic/local fixtures introduce no player-facing authorization surface."
+          },
+          {
+            "path": "tests/test_native_reference.py",
+            "disposition": "declined",
+            "reason": "Fixture/test diff inspected for security boundary assertions and exposed secrets; synthetic/local fixtures introduce no player-facing authorization surface."
+          },
+          {
+            "path": "tests/test_player_build.py",
+            "disposition": "declined",
+            "reason": "Fixture/test diff inspected for security boundary assertions and exposed secrets; synthetic/local fixtures introduce no player-facing authorization surface."
+          }
+        ],
+        "summary": {
+          "agent": "security",
+          "verdict": "PASS",
+          "score": 10,
+          "counts": {
+            "blocker": 0,
+            "major": 0,
+            "minor": 0,
+            "advisory": 0
+          },
+          "one_line": "No reachable security defect identified across the complete bank fixed-base worktree diff and its directly consumed pinned SDK boundaries."
+        },
+        "scope": {
+          "changed_paths": 16,
+          "trust_model": "Trusted SDK-authored native code and local workspace; no hostile arbitrary native DLL/query/DllMain assumed.",
+          "boundaries_reviewed": [
+            "CMake managed flag defaults/requirements, player graphics hash input and diagnostics exclusion from default installation",
+            "Managed immutable BankSelectorPayload code/data/fixup/package/schema descriptor, generated separate code/data relocation comparisons and copied-buffer lifetime",
+            "WorkshopBankReferenceInstall executable/build/H5U/old-prototype checks; standalone current-process hook ownership and signature verification",
+            "Pinned SDK bank module bounded code/data spans, sealed candidate file read lease/hash, retained schema/generation checks and uncertain activation/module-release handling",
+            "Pinned SDK xkit player producer uses managed=False and exact separate bank DLL/H5U/shared infrastructure/NOTICE/README manifest without distributing original d3d9.universe.dll",
+            "Public current-diff content and dependency/config URLs scanned for credential/private-key patterns; no match found"
+          ]
+        },
+        "verification_limits": [
+          "No source edits, tests, builds, game launch, focus, mouse or keyboard actions performed. Only the explicitly requested independent evidence JSON was written.",
+          "Parent-reported consumer6/6 and live filled-card/core HMR/player ZIP acceptance were not independently rerun.",
+          "Read exact parent bank-human-card-core-live-final.json and bank-player-latest-archive.json scope headers. Their stored passed flags are contextual evidence, not this reviewer independently checking screenshots or dynamic lifetime.",
+          "Dependency dispositions inspect directly used pinned SDK/game-api contracts; they do not represent another recursive full-publication review of the dependency repositories.",
+          "Standalone legacy InstallSelector/diagnostic file-copy behavior present at the fixed base remains within its explicit trusted developer contract; this pass does not certify arbitrary malicious inputs or concurrent external filesystem replacement.",
+          "No full attestation created; configured base was not changed."
+        ]
+      }
+    }
+  },
+  "overall": "PASS",
+  "timestamp": "2026-10-07T22:11:09.450Z"
+}
