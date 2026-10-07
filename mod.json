@@ -1,5 +1,6 @@
 {
   "id": "army-reference",
+  "native_adapter": "bank-selector",
   "source_archive": "Universe_mod.pak",
   "source_path": "UI/UIGameRoot.(UIGameRoot).xdb",
   "reference_windows": {

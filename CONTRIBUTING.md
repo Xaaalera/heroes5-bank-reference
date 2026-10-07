@@ -2,6 +2,8 @@
 
 ## RU
 
+Проверка `python -X utf8 scripts/check.py` сама находит установленный MSVC x86 и CMake/CTest через закреплённый SDK. Добавлять CMake в PATH или открывать специальный терминал Visual Studio не нужно. Build Tools остаются необходимыми для нативных проверок; отсутствие инструментов означает ошибку, а не пропуск теста.
+
 Правки проверяются на закреплённом devkit. Обновлять README и wiki при изменении установки/поведения; проверенный commit среды указывать явно. Живые результаты сохранять в [дневнике](https://xaaalera.github.io/heroes5-knowledge/reference/research-diary/), не повышать область проверки по одному успешному build.
 
 Перед push: npm ci, npm test, npm run review:secrets. Для текущего diff из npm run review:info получить независимые craft, architecture, tests, docs, security заключения по контрактам devkit/.agents/review. Оценка =10−20×blocker−3×major−minor; нерешённые blocker/major не допускаются. Docs-review включает все Markdown-пути, reviewer и восемь критериев purpose/structure/specificity/reproducibility/evidence/applicability/translations/maintenance с обоснованием и списком findings.
@@ -11,6 +13,8 @@
 Не коммитить игру, PAK, H5M, H5U, DLL/EXE, профили, сохранения, логи или локальные пути. Собранные файлы хранятся в .local. Лицензию на чужие игровые ресурсы эти исходники не предоставляют.
 
 ## EN
+
+`python -X utf8 scripts/check.py` discovers installed MSVC x86 and CMake/CTest through the pinned SDK. No manual CMake PATH change or special Visual Studio terminal is needed. Build Tools remain required for native checks; missing tools fail the check rather than silently skipping it.
 
 Use the pinned devkit, update README/wiki when installation or behavior changes and name the tested environment commit. Preserve real live outcomes in the linked diary; a successful build does not expand validation scope.
 

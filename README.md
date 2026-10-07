@@ -1,16 +1,24 @@
 # Heroes V Bank Reference
 
-RU: проверенные зависимости: devkit `bc471b6`, Game API `2aa326d`. Мастерская использует один canonical checkout; самостоятельный clone получает закреплённые сабмодули.
+## Текущая разработка / Current development
 
-EN: Verified dependency revisions: devkit `bc471b6`, Game API `2aa326d`. The workshop shares canonical checkouts; standalone clones use pinned submodules.
+В нашей мастерской новая версия xkit поддерживает `xkit start army-reference --map WorkshopPolygon`, `xkit build army-reference` и `xkit release army-reference`. При разработке меняем исходники; сборку и применение поддерживаемых изменений выполняет SDK. При выпуске создаётся отдельный ZIP с DLL и H5U для обычного запуска игры.
 
-RU, 2026-10-07: [xkit 0.1.0](https://github.com/Xaaalera/heroes5-mod-devkit/releases/tag/v0.1.0) опубликован с готовым SDK. Новый SDK-плагин выпускается отдельной DLL; общие dinput8.dll и d3d9.dll обеспечивают подключение. Исходная библиотека игры сохраняется локально как d3d9.universe.dll и не распространяется. Проверены две независимые DLL и обычный запуск. Этот плагин сохраняет собственный legacy-контракт и ещё не переведён на HMR.
-EN: xkit 0.1.0 is published with a ready SDK bundle. New SDK plugins ship as separate DLLs with shared dinput8.dll/d3d9.dll infrastructure; the game original remains local as d3d9.universe.dll. Two independent player DLLs and ordinary startup are verified. This existing plugin retains its legacy contract and is not yet migrated to HMR.
+Исходники адаптера и готовый SDK опубликованы в [xkit v0.1.1-preview.1](https://github.com/Xaaalera/heroes5-mod-devkit/releases/tag/v0.1.1-preview.1). В живой игре проверены применение DLL, автоматическая замена ядра, новая функция и откат несовместимого ядра с продолжением прежней функции. Карточка склепа и сохранение заполненного кеша при обновлении DLL и ядра SDK проверены. Опубликованный preview.3 использует прежний контракт запуска; его возможности не следует смешивать с проверками текущего адаптера.
+
+EN: The workshop's xkit adapter is available in the sources and ready [SDK v0.1.1-preview.1](https://github.com/Xaaalera/heroes5-mod-devkit/releases/tag/v0.1.1-preview.1), with named start/build/release. Edit source files; SDK handles compilation and supported updates. Named native application, automatic core replacement, a newly available export and incompatible-core rollback are live verified. Crypt-card rendering and populated cache continuity across bank DLL replacement are verified; populated crypt-card cache continuity through core replacement is also live verified. Published preview.3 retains its legacy startup contract.
+
+RU: проверенные зависимости: devkit `5f4af79`, Game API `2aa326d`. Мастерская использует один canonical checkout; самостоятельный clone получает закреплённые сабмодули.
+
+EN: Verified dependency revisions: devkit `5f4af79`, Game API `2aa326d`. The workshop shares canonical checkouts; standalone clones use pinned submodules.
+
+RU, 2026-10-07: [xkit 0.1.0](https://github.com/Xaaalera/heroes5-mod-devkit/releases/tag/v0.1.0) опубликован с готовым SDK. Новый SDK-плагин выпускается отдельной DLL; общие dinput8.dll и d3d9.dll обеспечивают подключение. Исходная библиотека игры сохраняется локально как d3d9.universe.dll и не распространяется. Проверены две независимые DLL и обычный запуск. Опубликованный preview.3 сохраняет прежний контракт запуска. Текущая разработка использует адаптер HMR, описанный выше.
+EN: xkit 0.1.0 is published with a ready SDK bundle. New SDK plugins ship as separate DLLs with shared dinput8.dll/d3d9.dll infrastructure; the game original remains local as d3d9.universe.dll. Two independent player DLLs and ordinary startup are verified. Published preview.3 retains its legacy startup contract. Current development uses the HMR adapter described above.
 
 
 [Game API](https://github.com/Xaaalera/heroes5-game-api) — shared C++ game bindings / общая библиотека привязок к игре.
 
-RU,2026-10-04: общий devkit разрабатывает ABI3 hot reload и выпуск новых SDK-плагинов в bin/Heroes5Mods/Plugins. Справочник сохраняет текущий legacy DLL-контракт и H5U; такая перезагрузка пока не поддержана. EN: Shared bootstrap remains the ordinary player entry; the SDK prototype does not automatically migrate this plugin. [SDK status/release notes](https://github.com/Xaaalera/heroes5-mod-devkit).
+Историческое состояние / Historical status, 2026-10-04: общий devkit разрабатывает ABI3 hot reload и выпуск новых SDK-плагинов в bin/Heroes5Mods/Plugins. Справочник сохраняет текущий legacy DLL-контракт и H5U; такая перезагрузка пока не поддержана. EN: Shared bootstrap remains the ordinary player entry; the SDK prototype does not automatically migrate this plugin. [SDK status/release notes](https://github.com/Xaaalera/heroes5-mod-devkit).
 
 
 ## Author and related projects / Автор и связанные проекты
@@ -31,7 +39,7 @@ RU: личные проекты автора; не официальные про
 
 ### Игроку: обычный запуск
 
-Поставка — DLL и H5U, без отдельного EXE. Версия 0.1.0-preview.2 экспериментальная; Наличие архива проверяй в [Releases](https://github.com/Xaaalera/heroes5-bank-reference/releases): пустой список означает, что пользовательский пакет ещё не опубликован. Старый EXE-кандидат отменён. Code → Download ZIP скачивает исходники.
+Поставка — DLL и H5U, без отдельного EXE. Опубликован экспериментальный выпуск [0.1.0-preview.3](https://github.com/Xaaalera/heroes5-bank-reference/releases/tag/v0.1.0-preview.3). Выбирай готовый архив в Releases; Code → Download ZIP скачивает исходники. Проверки конкретного выпуска описаны ниже.
 
 1. Закрой игру и редактор. Файлы пакета размещаются в установленной игре:
    - bin/dinput8.dll — общий файл для обоих наших модов;
@@ -50,7 +58,7 @@ Python, Git и devkit игроку не нужны. DLL и H5U должны бы
 
 ### Что проверено
 
-Новый пакет с xkit, 2026-10-07: проверены автоматическое подключение DLL при обычном запуске и штатное закрытие игры с кодом 0. Отображение карточки нового пакета ещё не проверено; HMR этого плагина пока не поддерживается. Следующие результаты относятся к прежнему preview.2 и не подтверждают новый пакет.
+Новый пакет с xkit, 2026-10-07: проверены автоматическое подключение DLL при обычном запуске и штатное закрытие игры с кодом 0. Карточка именно нового игрового архива ещё не проверена. В режиме разработки проверены карточка склепа и сохранение её заполненного кеша при обновлении DLL и ядра SDK. Следующие результаты относятся к прежнему preview.2 и не подтверждают новый пакет.
 
 Обычный H5_Game.exe загрузил обе DLL. Предиктор прошёл пять инструментированных боёв с включённым справочником. После удаления старого текстового пакета получена чистая карточка склепа; A/B размещены на разных строках, окно помещается в кадре 1264×921. Все хранилища и разрешения экрана этим не проверены. Проверялся русский интерфейс; другие локализации не проверены. Сам интерфейс Heroes/Lobby отдельно не автоматизировался.
 
@@ -84,7 +92,9 @@ Python, Git и devkit игроку не нужны. DLL и H5U должны бы
 
 Prepare создаёт новую тестовую копию один раз и отказывается перезаписывать существующую. Команды выше не запускают игру. После изменения рецепта заново собираются H5U, generated header и DLL: в модуле закреплён хеш H5U.
 
-Для выпуска с новым xkit сначала собери закреплённый SDK, затем добавь при настройке справочника `-DXKIT_GRAPHICS_FILE=<путь к собранному d3d9.dll SDK>`. В пакет включай именно эту библиотеку и соответствующий dinput8.dll. Сборка закрепляет её хеш в DLL справочника; файл из установленной игры для этой настройки не используй. Без параметра сохраняется прежняя поставка с исходной графической библиотекой. Это изменение поставки; HMR старого плагина пока не поддерживается.
+Для выпуска с новым xkit сначала собери закреплённый SDK, затем добавь при настройке справочника `-DXKIT_GRAPHICS_FILE=<путь к собранному d3d9.dll SDK>`. В пакет включай именно эту библиотеку и соответствующий dinput8.dll. Сборка закрепляет её хеш в DLL справочника; файл из установленной игры для этой настройки не используй. Без параметра сохраняется прежняя поставка с исходной графической библиотекой. Это настройка игрового выпуска; режим разработки с HMR включается отдельно через xkit start.
+
+Режим `-DBANK_MANAGED_SELECTOR=ON` передаёт callback и данные постоянному сервису xkit. Он включается при xkit start и выключен в игровом выпуске. В нашей тестовой игре проверены вызовы callback, карточка склепа и сохранение заполненного кеша при автоматическом обновлении DLL и ядра SDK. Изменение комментария проверяет цикл обновления; отдельный callback с меткой версии подтверждает выполнение изменённого кода. Несовместимая структура данных отклоняется, чтобы сохранить кеш окон.
 
 По умолчанию CMake install ставит только DLL. Прежний EXE остаётся диагностикой и устанавливается лишь явным --component Diagnostics; игроку он не поставляется. Не совмещай его установку hook с автоматическим подключением DLL.
 
@@ -98,7 +108,7 @@ Reference possible bank armies for the linked Universe build: portraits, tiers, 
 
 ### Player installation
 
-Check Releases for a published DLL/H5U archive; if none is listed, no player package is available yet. Do not use a separate EXE or source ZIP. Version 0.1.0-preview.2 is experimental; the old EXE draft was withdrawn. Exit game/editor and place the shared bin/dinput8.dll, bin/Heroes5Mods/WorkshopBankReference.dll and UserMODs/workshop-army-reference.h5u under the installed game directory.
+Check Releases for a published DLL/H5U archive; if none is listed, no player package is available yet. Do not use a separate EXE or source ZIP. Version 0.1.0-preview.3 is experimental; the old EXE draft was withdrawn. Exit game/editor and place the shared bin/dinput8.dll, bin/Heroes5Mods/WorkshopBankReference.dll and UserMODs/workshop-army-reference.h5u under the installed game directory.
 
 Both mods share one bootstrap. For an xkit package, first retain the original bin/d3d9.dll as bin/d3d9.universe.dll, then install the package's bin/d3d9.dll. Preserve an already retained original and back up the previous dinput8.dll. Do not replace another loader without compatibility checks. uni.dll and um.dll remain unchanged. Remove the old workshop-object-reference.h5u text prototype: it adds oversized descriptions, and the new DLL rejects that conflict.
 
@@ -106,13 +116,15 @@ To uninstall, close the game and remove this mod's WorkshopBankReference.dll and
 
 Developers building this delivery must first build the pinned SDK, then configure the bank with `-DXKIT_GRAPHICS_FILE=<built SDK d3d9.dll>`. Package that exact facade and its matching input bootstrap. The bank DLL embeds its digest; do not take this build input from an installed game. Omitting the option retains stock graphics verification. This changes delivery, not the plugin's algorithm or HMR support.
 
+The local `-DBANK_MANAGED_SELECTOR=ON` prototype transfers callback bytes and data to the new xkit resident service. It defaults off and is absent from published preview.3. The owned test game verifies callback execution, crypt-card rendering and populated cache continuity through automatic bank and SDK core replacement. A comment-only bank source update checks lifecycle continuity; a separate marked callback test verifies changed behavior. A changed data-table layout is rejected to preserve cached-window compatibility.
+
 Start through Heroes/Lobby as usual. Hover a supported bank for possible armies. No player Python, Git or devkit installation is required. DLL and H5U must belong to the same release. The linked four-hash game build is required; a mismatch or module failure cancels startup with a message.
 
 To uninstall, exit and remove the bank DLL/H5U only. Leave unrelated UserMODs alone. Remove our shared dinput8.dll only after all our DLL mods are removed.
 
 ### Evidence and development
 
-New xkit delivery, October 7, 2026: automatic DLL installation on ordinary startup and normal game exit with code 0 are verified. Current-package card rendering is not yet verified; this plugin does not support HMR yet. The following results belong to the older preview.2 delivery and do not validate the new package.
+New xkit delivery, October 7, 2026: automatic DLL installation on ordinary startup and normal game exit with code 0 are verified. Card rendering from this exact player archive is not yet verified. Development mode verifies the crypt card and its populated cache through bank DLL and SDK core updates. The following results belong to the older preview.2 delivery and do not validate the new package.
 
 Ordinary H5_Game.exe startup loaded both DLLs; five instrumented predictor battles passed with bank reference enabled. After removing the old text package, a clean crypt card showed separate A/B rows within a 1264×921 frame. This does not cover every bank or display size. The tested interface was Russian; other localizations are unverified. The Heroes/Lobby UI was not separately automated.
 

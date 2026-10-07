@@ -92,6 +92,39 @@ class NativeTests(unittest.TestCase):
         self.assertEqual(struct.unpack('<I', machine.mem_read(0x40008c, 4))[0], 2)
         self.assertEqual(struct.unpack('<II', machine.mem_read(0x301100, 8)), (0x400900, 0x400600))
 
+        # Managed host mode returns to its caller so the host can retire a
+        # generation after dispatch. Reuse the cached root and route data.
+        # A distinct code location models a new generation and avoids reusing
+        # Unicorn's translated blocks for the earlier legacy instructions.
+        machine.mem_write(0x300800, probe.layout_trampoline(
+            0x300800, 0x301000, routes, return_to_caller=True))
+        return_address = 0x401f00
+        expected_registers = list(initial)
+        expected_registers[6] += 4  # Consume only the host return address.
+        expected_registers[5] = 0x24681357
+        for public_title, destroyed, expected_root in [
+            ('Gargoyles', False, 0x400900),
+            ('Ore stock', False, 0x400300),
+            ('Gargoyles', True, 0x400300),
+        ]:
+            with self.subTest(callback_title=public_title, destroyed_root=destroyed):
+                actual = public_title.encode('utf-16-le')
+                machine.mem_write(0x400800, actual)
+                machine.mem_write(0x40020c, struct.pack('<II', 0x400800, 0x400800 + len(actual)))
+                machine.mem_write(0x40090b, b'\x80' if destroyed else b'\0')
+                machine.mem_write(initial[6], struct.pack('<II', return_address, 0x400200))
+                for register, value in zip(registers, initial):
+                    machine.reg_write(register, value)
+                machine.reg_write(UC_X86_REG_EBP, 0x13572468)
+                machine.reg_write(UC_X86_REG_EDI, expected_registers[5])
+                machine.emu_start(0x300800, return_address, count=300)
+                expected_registers[0] = expected_root
+                self.assertEqual([machine.reg_read(register) for register in registers], expected_registers)
+                self.assertEqual(machine.reg_read(UC_X86_REG_EBP), 0x13572468)
+                self.assertEqual(struct.unpack('<I', machine.mem_read(initial[6] + 4, 4))[0], 0x400200)
+                self.assertEqual(struct.unpack('<I', machine.mem_read(0x40008c, 4))[0], 2)
+                self.assertEqual(struct.unpack('<II', machine.mem_read(0x301100, 8)), (0x400900, 0x400600))
+
     def test_counter_preserves_entry_semantics_registers_flags_and_stack(self):
         randomizer = random.Random(19)
         registers = [UC_X86_REG_EAX, UC_X86_REG_EBX, UC_X86_REG_ECX, UC_X86_REG_EDX,
