@@ -1,5 +1,6 @@
 """Game-free build/installer integration; uses only a synthetic routing archive."""
 import importlib.util
+import hashlib
 import json
 from pathlib import Path
 import subprocess
@@ -24,17 +25,40 @@ class PlayerBuildTests(unittest.TestCase):
                 archive.writestr('UI/WorkshopArmy/routes.json', json.dumps(routes))
             result = builder.generate(package, root / 'generated/bank_payload.hpp')
             self.assertEqual(result['routes'], 1)
+            # Build-time identity must come from the selected SDK artifact;
+            # these synthetic bytes never become a game installation.
+            graphics = root / 'sdk-d3d9.dll'
+            graphics.write_bytes(b'synthetic SDK graphics build artifact')
+            graphics_digest = hashlib.sha256(graphics.read_bytes()).hexdigest()
             # Native CTest calls the production installer against its own memory,
             # never an actual game process and never a game resource package.
             commands = [
                 ['cmake', '-S', str(MOD_ROOT), '-B', str(root / 'build'), '-A', 'Win32',
-                 '-DBANK_PAYLOAD_DIR=' + str(root / 'generated')],
+                 '-DBANK_PAYLOAD_DIR=' + str(root / 'generated'),
+                 '-DXKIT_GRAPHICS_FILE=' + str(graphics)],
                 ['cmake', '--build', str(root / 'build'), '--config', 'Release'],
                 ['ctest', '--test-dir', str(root / 'build'), '-C', 'Release', '--output-on-failure'],
             ]
             for command in commands:
                 completed = subprocess.run(command, capture_output=True, text=True, errors='replace', timeout=120)
                 self.assertEqual(completed.returncode, 0, completed.stdout + completed.stderr)
+
+            plugin_project = (root / 'build/workshop_bank_plugin.vcxproj').read_text(encoding='utf-8-sig')
+            self.assertIn('XKIT_GRAPHICS_SHA256', plugin_project)
+            self.assertIn(graphics_digest, plugin_project)
+            diagnostic_project = (root / 'build/workshop_bank_reference.vcxproj').read_text(encoding='utf-8-sig')
+            self.assertNotIn('XKIT_GRAPHICS_SHA256', diagnostic_project)
+
+            # The omitted-option delivery remains supported independently.
+            stock_commands = [
+                ['cmake', '-S', str(MOD_ROOT), '-B', str(root / 'build'), '-DXKIT_GRAPHICS_FILE='],
+                ['cmake', '--build', str(root / 'build'), '--config', 'Release', '--target', 'workshop_bank_plugin'],
+            ]
+            for command in stock_commands:
+                completed = subprocess.run(command, capture_output=True, text=True, errors='replace', timeout=120)
+                self.assertEqual(completed.returncode, 0, completed.stdout + completed.stderr)
+            stock_project = (root / 'build/workshop_bank_plugin.vcxproj').read_text(encoding='utf-8-sig')
+            self.assertNotIn('XKIT_GRAPHICS_SHA256', stock_project)
 
             # Exercise the production file installer, but only under this fresh
             # temporary directory. Existing differing content must survive.

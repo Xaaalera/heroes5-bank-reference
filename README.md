@@ -35,9 +35,10 @@ RU: личные проекты автора; не официальные про
 
 1. Закрой игру и редактор. Файлы пакета размещаются в установленной игре:
    - bin/dinput8.dll — общий файл для обоих наших модов;
+   - bin/d3d9.dll — графический файл xkit, если он входит в пакет;
    - bin/Heroes5Mods/WorkshopBankReference.dll;
    - UserMODs/workshop-army-reference.h5u.
-2. Не перезаписывай dinput8.dll другого мода: совместимость не проверена. Штатные d3d9.dll, uni.dll и um.dll не заменяются.
+2. Для пакета с xkit сначала сохрани исходный bin/d3d9.dll как bin/d3d9.universe.dll, затем установи bin/d3d9.dll из того же пакета. Уже сохранённый оригинал не перезаписывай. Сохрани резервную копию прежнего dinput8.dll; файлы другого загрузчика без проверки совместимости не заменяй. uni.dll и um.dll не меняются.
 3. Если сохранился старый текстовый workshop-object-reference.h5u, убери его из UserMODs. Он добавляет длинное описание над портретами; новая DLL отказывается работать при этом конфликте.
 4. Запускай Heroes/Lobby как раньше. На карте наведи на поддерживаемое хранилище: должна появиться справка с возможными армиями.
 
@@ -45,7 +46,11 @@ Python, Git и devkit игроку не нужны. DLL и H5U должны бы
 
 Для удаления закрой игру и убери WorkshopBankReference.dll и workshop-army-reference.h5u из указанных папок. Другие UserMODs не трогай. Общий dinput8.dll удаляй только после всех наших DLL-модов и только если он установлен из нашего пакета.
 
+После удаления всех модов, использующих xkit, восстанови сохранённый прежний dinput8.dll. Если установлен наш графический файл, убери его и переименуй сохранённый d3d9.universe.dll обратно в d3d9.dll. Пока другой мод использует xkit, общие файлы оставь на месте. Если происхождение файлов неизвестно, восстанови игру из своей резервной копии вместо удаления наугад.
+
 ### Что проверено
+
+Новый пакет с xkit, 2026-10-07: проверены автоматическое подключение DLL при обычном запуске и штатное закрытие игры с кодом 0. Отображение карточки нового пакета ещё не проверено; HMR этого плагина пока не поддерживается. Следующие результаты относятся к прежнему preview.2 и не подтверждают новый пакет.
 
 Обычный H5_Game.exe загрузил обе DLL. Предиктор прошёл пять инструментированных боёв с включённым справочником. После удаления старого текстового пакета получена чистая карточка склепа; A/B размещены на разных строках, окно помещается в кадре 1264×921. Все хранилища и разрешения экрана этим не проверены. Проверялся русский интерфейс; другие локализации не проверены. Сам интерфейс Heroes/Lobby отдельно не автоматизировался.
 
@@ -66,17 +71,20 @@ Python, Git и devkit игроку не нужны. DLL и H5U должны бы
     .venv/Scripts/python devkit/scripts/mod-dev.py prepare --sandbox
     .venv/Scripts/python devkit/scripts/mod-dev.py build --sandbox --mod army-reference --source .
     .venv/Scripts/python scripts/build-player.py "$env:H5_WORKSPACE/.local/test-state/army-reference.h5u"
-    cmake -S . -B .local/player-build -A Win32
-    cmake --build .local/player-build --config Release
-    cmake --install .local/player-build --config Release --prefix .local/dist
     cmake -S devkit/native -B .local/bootstrap -A Win32
     cmake --build .local/bootstrap --config Release
     cmake --install .local/bootstrap --config Release --prefix .local/dist
+    cmake -S . -B .local/player-build -A Win32 -DXKIT_GRAPHICS_FILE="$PWD/.local/bootstrap/Release/d3d9.dll"
+    cmake --build .local/player-build --config Release
+    cmake --install .local/player-build --config Release --prefix .local/dist
+    Copy-Item .local/bootstrap/Release/d3d9.dll .local/dist/bin/d3d9.dll
     New-Item -ItemType Directory -Path .local/dist/UserMODs -Force
     Copy-Item "$env:H5_WORKSPACE/.local/test-state/army-reference.h5u" .local/dist/UserMODs/workshop-army-reference.h5u
     .venv/Scripts/python scripts/check.py
 
 Prepare создаёт новую тестовую копию один раз и отказывается перезаписывать существующую. Команды выше не запускают игру. После изменения рецепта заново собираются H5U, generated header и DLL: в модуле закреплён хеш H5U.
+
+Для выпуска с новым xkit сначала собери закреплённый SDK, затем добавь при настройке справочника `-DXKIT_GRAPHICS_FILE=<путь к собранному d3d9.dll SDK>`. В пакет включай именно эту библиотеку и соответствующий dinput8.dll. Сборка закрепляет её хеш в DLL справочника; файл из установленной игры для этой настройки не используй. Без параметра сохраняется прежняя поставка с исходной графической библиотекой. Это изменение поставки; HMR старого плагина пока не поддерживается.
 
 По умолчанию CMake install ставит только DLL. Прежний EXE остаётся диагностикой и устанавливается лишь явным --component Diagnostics; игроку он не поставляется. Не совмещай его установку hook с автоматическим подключением DLL.
 
@@ -92,13 +100,19 @@ Reference possible bank armies for the linked Universe build: portraits, tiers, 
 
 Check Releases for a published DLL/H5U archive; if none is listed, no player package is available yet. Do not use a separate EXE or source ZIP. Version 0.1.0-preview.2 is experimental; the old EXE draft was withdrawn. Exit game/editor and place the shared bin/dinput8.dll, bin/Heroes5Mods/WorkshopBankReference.dll and UserMODs/workshop-army-reference.h5u under the installed game directory.
 
-Both mods share one bootstrap. Do not overwrite another mod's dinput8.dll without compatibility checks; original d3d9.dll, uni.dll and um.dll remain unchanged. Remove the old workshop-object-reference.h5u text prototype: it adds oversized descriptions, and the new DLL rejects that conflict.
+Both mods share one bootstrap. For an xkit package, first retain the original bin/d3d9.dll as bin/d3d9.universe.dll, then install the package's bin/d3d9.dll. Preserve an already retained original and back up the previous dinput8.dll. Do not replace another loader without compatibility checks. uni.dll and um.dll remain unchanged. Remove the old workshop-object-reference.h5u text prototype: it adds oversized descriptions, and the new DLL rejects that conflict.
+
+To uninstall, close the game and remove this mod's WorkshopBankReference.dll and workshop-army-reference.h5u. Keep shared files while another xkit mod uses them. After removing all xkit mods, restore the backed-up input DLL, remove our graphics facade and rename the retained d3d9.universe.dll back to d3d9.dll. If file ownership is unknown, use your game backup rather than deleting unknown files.
+
+Developers building this delivery must first build the pinned SDK, then configure the bank with `-DXKIT_GRAPHICS_FILE=<built SDK d3d9.dll>`. Package that exact facade and its matching input bootstrap. The bank DLL embeds its digest; do not take this build input from an installed game. Omitting the option retains stock graphics verification. This changes delivery, not the plugin's algorithm or HMR support.
 
 Start through Heroes/Lobby as usual. Hover a supported bank for possible armies. No player Python, Git or devkit installation is required. DLL and H5U must belong to the same release. The linked four-hash game build is required; a mismatch or module failure cancels startup with a message.
 
 To uninstall, exit and remove the bank DLL/H5U only. Leave unrelated UserMODs alone. Remove our shared dinput8.dll only after all our DLL mods are removed.
 
 ### Evidence and development
+
+New xkit delivery, October 7, 2026: automatic DLL installation on ordinary startup and normal game exit with code 0 are verified. Current-package card rendering is not yet verified; this plugin does not support HMR yet. The following results belong to the older preview.2 delivery and do not validate the new package.
 
 Ordinary H5_Game.exe startup loaded both DLLs; five instrumented predictor battles passed with bank reference enabled. After removing the old text package, a clean crypt card showed separate A/B rows within a 1264×921 frame. This does not cover every bank or display size. The tested interface was Russian; other localizations are unverified. The Heroes/Lobby UI was not separately automated.
 
