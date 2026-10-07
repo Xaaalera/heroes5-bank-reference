@@ -1,5 +1,17 @@
 # Heroes V Bank Reference
 
+RU: проверенные зависимости: devkit `bc471b6`, Game API `2aa326d`. Мастерская использует один canonical checkout; самостоятельный clone получает закреплённые сабмодули.
+
+EN: Verified dependency revisions: devkit `bc471b6`, Game API `2aa326d`. The workshop shares canonical checkouts; standalone clones use pinned submodules.
+
+RU, 2026-10-07: [xkit 0.1.0](https://github.com/Xaaalera/heroes5-mod-devkit/releases/tag/v0.1.0) опубликован с готовым SDK. Новый SDK-плагин выпускается отдельной DLL; общие dinput8.dll и d3d9.dll обеспечивают подключение. Исходная библиотека игры сохраняется локально как d3d9.universe.dll и не распространяется. Проверены две независимые DLL и обычный запуск. Этот плагин сохраняет собственный legacy-контракт и ещё не переведён на HMR.
+EN: xkit 0.1.0 is published with a ready SDK bundle. New SDK plugins ship as separate DLLs with shared dinput8.dll/d3d9.dll infrastructure; the game original remains local as d3d9.universe.dll. Two independent player DLLs and ordinary startup are verified. This existing plugin retains its legacy contract and is not yet migrated to HMR.
+
+
+[Game API](https://github.com/Xaaalera/heroes5-game-api) — shared C++ game bindings / общая библиотека привязок к игре.
+
+RU,2026-10-04: общий devkit разрабатывает ABI3 hot reload и выпуск новых SDK-плагинов в bin/Heroes5Mods/Plugins. Справочник сохраняет текущий legacy DLL-контракт и H5U; такая перезагрузка пока не поддержана. EN: Shared bootstrap remains the ordinary player entry; the SDK prototype does not automatically migrate this plugin. [SDK status/release notes](https://github.com/Xaaalera/heroes5-mod-devkit).
+
 
 ## Author and related projects / Автор и связанные проекты
 
@@ -68,7 +80,7 @@ Prepare создаёт новую тестовую копию один раз и
 
 По умолчанию CMake install ставит только DLL. Прежний EXE остаётся диагностикой и устанавливается лишь явным --component Diagnostics; игроку он не поставляется. Не совмещай его установку hook с автоматическим подключением DLL.
 
-Генератор получает code/data из закреплённого native-probe, вычисляет релокации через Capstone и сравнивает результат на трёх адресах с исходным генератором. WorkshopBankReferenceInstall проверяет игру/H5U/отсутствие текстового прототипа, затем ставит селектор в текущий процесс после проверки шести исходных байт 0x5f8800. Bootstrap останавливает запуск при отказе любого модуля.
+Генератор получает code/data из закреплённого native-probe, вычисляет релокации через Capstone и сравнивает три варианта размещения с исходным генератором. WorkshopBankReferenceInstall проверяет игру/H5U/отсутствие текстового прототипа, затем подключает выбор армии банка через BankLayout после проверки исходных инструкций. Bootstrap останавливает запуск при отказе любого модуля.
 
 Шесть проверок включают x86-счётчик/селектор, рецепт, неверные маршруты и нативный fixture на синтетических данных. Проверяются защиты памяти, неверный/уже заменённый hook, копирование H5U в пустую временную папку, повтор без перезаписи, сохранение отличающегося файла при отказе и неизменность источника. Это проверки без игры; CMake/компилятор обязательны.
 
@@ -96,6 +108,17 @@ Use the pinned SDK and shared PowerShell commands above with Windows, Git, Pytho
 
 The historical SDK link identifies published preview.2 verification. In a linked workshop, the mod's devkit directory is a junction to the single top-level SDK; current HEAD/gitlink define its version. Run `scripts/sync-subrepos.ps1 -Check` from the workshop, repairing without `-Check`. Never copy shared edits between repos. Standalone clones retain normal pinned submodules; commit SDK changes, synchronize pins and reverify consumers before releasing.
 
-The build generator freezes the pinned devkit selector/data, derives relocations and compares three rebases. The DLL validates the game, paired H5U and absence of the legacy text package before checking and patching entry 0x5f8800 in its own process. Bootstrap aborts startup on failure.
+The build generator freezes the pinned devkit selector/data, derives relocations and compares three rebases. The DLL validates the game, paired H5U and absence of the legacy text package before checking original instructions and connecting bank army selection through BankLayout in its own process. Bootstrap aborts startup on failure.
 
 Six game-free checks cover x86 behavior, recipe/routes, native memory protections and hook rejection, plus resource copying into a temporary directory, unchanged repeats and preservation of differing existing files/source. CMake/compiler availability is required. Recipe changes require rebuilding H5U, generated header and DLL together.
+
+## Standalone use / Работа вне мастерской
+
+RU: этот репозиторий можно использовать отдельно. Начни с его README и AGENTS.md; глобальная папка мастерской не обязательна. Если есть .gitmodules, выполни `git submodule update --init --recursive` после клонирования. В связанной мастерской используй её sync-subrepos вместо создания вторых checkout.
+EN: This repository can be used independently. Start with its README and AGENTS.md; the global workshop is optional. If .gitmodules exists, initialize pinned dependencies with `git submodule update --init --recursive`. In a linked workshop use its canonical dependency synchronization.
+
+- [Devkit commands / команды SDK](https://github.com/Xaaalera/heroes5-mod-devkit/blob/main/docs/commands.md).
+- [Game API contracts / контракты библиотеки](https://github.com/Xaaalera/heroes5-game-api/blob/main/docs/mechanisms/game-bindings.md).
+- [Research index / карта исследований](https://xaaalera.github.io/heroes5-knowledge/reference/research-index/).
+
+[Code standards / стандарты кода](https://github.com/Xaaalera/claude-skills).

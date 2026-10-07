@@ -1,4 +1,5 @@
 #include "player_launch.hpp"
+#include "../game-api/include/h5/hooks.hpp"
 #include "bank_payload.hpp"
 #include <cstring>
 #include <iostream>
@@ -6,8 +7,8 @@
 
 namespace {
 
-constexpr uintptr_t entry = 0x5f8800;
-constexpr unsigned char original[] = {0x8b, 0x2d, 0x68, 0x96, 0xfd, 0x00};
+constexpr uintptr_t entry = h5::hooks::BankLayout.address;
+constexpr const auto& original = h5::hooks::BankLayout.expected;
 
 void Require(bool success, const char* message) {
     if (!success) { throw std::runtime_error(message); }
