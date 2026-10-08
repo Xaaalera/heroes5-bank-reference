@@ -1,0 +1,76 @@
+{
+  "diffHash": "014674a3734a1aa6dc64160803d6a69b8c89824677c9b45ed8949b369776fbc1",
+  "commitSha": "84041205ba14bf6cdb5d0070c438edeb04370940",
+  "perAgent": {
+    "craft": {
+      "verdict": "PASS",
+      "score": 10,
+      "reviewer": "/root/article_accuracy_critic"
+    },
+    "architecture": {
+      "verdict": "PASS",
+      "score": 10,
+      "reviewer": "/root/article_gate_arch_review"
+    },
+    "tests": {
+      "verdict": "PASS",
+      "score": 10,
+      "reviewer": "/root/article_gate_tests_review"
+    },
+    "docs": {
+      "verdict": "PASS",
+      "score": 10,
+      "reviewer": "/root/article_newcomer_critic",
+      "review": {
+        "reviewer": "/root/article_newcomer_critic",
+        "files": [
+          "AGENTS.md",
+          "CONTRIBUTING.md",
+          "README.md"
+        ],
+        "criteria": {
+          "purpose": {
+            "evidence": "README identifies possible bank armies, tiers and alternatives, explicitly excluding disclosure of actual hidden guards; source checkout and released player ZIP are distinguished.",
+            "verdict": "PASS"
+          },
+          "structure": {
+            "evidence": "All3 listed Markdown files inspected: concise bilingual README, agent working rules and CONTRIBUTING site-standard pointer. Player/developer manuals route to the canonical knowledge site.",
+            "verdict": "PASS"
+          },
+          "specificity": {
+            "evidence": "README names direct git submodule update --init, consistent pins, root game-api versus devkit/game-api link and the canonical standalone-clone procedure; AGENTS distinguishes workspace, owned-game, native and source checks.",
+            "verdict": "PASS"
+          },
+          "reproducibility": {
+            "evidence": "Standalone versus linked-workshop initialization and branch-specific dependency handoff are explicit; current canonical SDK/API/native-project guidance supplies detailed setup. No new build, tests or game workflow executed by this reviewer.",
+            "verdict": "PASS"
+          },
+          "evidence": {
+            "evidence": "README ties the Crypt-card observation specifically to preview.4 and limits banks/resolutions; dated AGENTS observations distinguish development HMR from player delivery. This review does not transfer that live evidence to current dependency pins or newly built binaries.",
+            "verdict": "PASS"
+          },
+          "applicability": {
+            "evidence": "This is current source/documentation publication at d4d8812, not acceptance of a new player release. Original hidden-data policy and ordinary Heroes/Lobby player workflow remain explicit; updated SDK/API code requires separate runtime evidence.",
+            "verdict": "PASS"
+          },
+          "translations": {
+            "evidence": "RU/EN README and CONTRIBUTING agree on purpose, player/source distinction, dependency initialization, consistent pins and canonical ownership; bilingual agent rules retain equivalent evidence and input restrictions.",
+            "verdict": "PASS"
+          },
+          "maintenance": {
+            "evidence": "README/AGENTS/CONTRIBUTING keep live guides on the canonical site, with project-specific agent rules in AGENTS and repository gates in review configuration; dated evidence retains historical scope.",
+            "verdict": "PASS"
+          }
+        },
+        "findings": []
+      }
+    },
+    "security": {
+      "verdict": "PASS",
+      "score": 10,
+      "reviewer": "/root/article_translation_critic"
+    }
+  },
+  "overall": "PASS",
+  "timestamp": "2026-10-08T15:19:05.819Z"
+}
